@@ -12,6 +12,8 @@ Un jeu de logique du style Block Blast par exemple ou Tetris, avec des assemblag
 
 Globalement, ce seraient des jeux en 2D, sauf peut-être le jeu de voiture (et encore)
 Les deux premières idées seraient sûrement sous la forme de niveaux, de parcours, alors que le "Tetris" serait plûtot un jeu auquel on joue jusqu'à perdre
+
+
 <img width="500" height="300" alt="image" src="https://github.com/user-attachments/assets/289e7281-f396-4028-940a-fcb252264a8f" />
 <img width="450" height="250" alt="image" src="https://github.com/user-attachments/assets/5699c408-a0c9-41b7-bb43-45789054b450" />
 <img width="320" height="380" alt="image" src="https://github.com/user-attachments/assets/c8663b1e-8e11-45b0-a5c2-5031b55eee93" />
