@@ -1,4 +1,6 @@
 # JBL
+SEANCE 1 :
+
 Groupe de NSI de Benjamin, Luca et Jules
 
 Idée de projet:
@@ -18,3 +20,8 @@ Les deux premières idées seraient sûrement sous la forme de niveaux, de parco
 <img width="450" height="250" alt="image" src="https://github.com/user-attachments/assets/5699c408-a0c9-41b7-bb43-45789054b450" />
 <img width="320" height="380" alt="image" src="https://github.com/user-attachments/assets/c8663b1e-8e11-45b0-a5c2-5031b55eee93" />
 https://www.youtube.com/watch?v=6BE9dqqVZ2I
+
+
+SEANCE 2 :
+
+(à compléter)
