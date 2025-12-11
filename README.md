@@ -1,4 +1,4 @@
-<img width="526" height="296" alt="image" src="https://github.com/user-attachments/assets/fab7c0f4-0528-411d-a8b8-52cb43aee881" /># JBL
+
 SEANCE 1 :
 
 Groupe de NSI de Benjamin, Luca et Jules
