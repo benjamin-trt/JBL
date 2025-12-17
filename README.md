@@ -92,3 +92,37 @@ Planning pour les 15 semaines:
 
 - Nouveaux test afin de trouver des bugs ou de touts petits détails facilement modifiables
 - Début de préparation à la presentation orale de la rentrée de Pâques
+
+4eme séance: faut commencer a coder l'interface de jeu (les quatres voies et une voiture qui avance, le décor, ...) (un truc par personne)
+
+5eme séance: continuer de coder les bases ( ajouter les autres voitures)
+
+6eme séance: coder les bases(acceleration et augmentation de difficulte 
+
+7eme séance: coder les dernieres bases
+
+8eme séance: 
+
+luca: coder les mouvements de voitures grace aux fleches
+
+Jules: coder l'ecran principal 
+
+Benjamin : coder comment le jeu se termine
+
+
+
+9eme séance: 
+
+coder les differentrs types de vehicules, la difficulte qui augmente etc
+
+10eme séance:
+
+11eme séance:
+
+12eme séance:
+
+13eme séance:
+
+14eme séance:
+
+15eme séance:
