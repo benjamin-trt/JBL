@@ -34,18 +34,33 @@ Voici ci-dessous un exemple de jeu existant et qui se rapproche grandement selon
 
 séance 3:
 Planning pour les 15 semaines:
+
 1ere séance: 
+
 2eme séance: 
+
 3eme séance: 
+
 4eme séance: 
+
 5eme séance: 
+
 6eme séance: 
+
 7eme séance: 
+
 8eme séance: 
+
 9eme séance: 
+
 10eme séance: 
+
 11eme séance: 
+
 12eme séance: 
+
 13eme séance: 
+
 14eme séance: 
+
 15eme séance: 
