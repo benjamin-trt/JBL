@@ -32,4 +32,20 @@ Voici ci-dessous un exemple de jeu existant et qui se rapproche grandement selon
 
 <img width="500" height="300" alt="image" src="https://github.com/user-attachments/assets/fd9e6338-5450-4e6e-8c13-c5658a759ce1" />
 
-
+séance 3:
+Planning pour les 15 semaines:
+1ere séance: 
+2eme séance: 
+3eme séance: 
+4eme séance: 
+5eme séance: 
+6eme séance: 
+7eme séance: 
+8eme séance: 
+9eme séance: 
+10eme séance: 
+11eme séance: 
+12eme séance: 
+13eme séance: 
+14eme séance: 
+15eme séance: 
