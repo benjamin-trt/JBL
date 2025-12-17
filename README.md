@@ -45,12 +45,14 @@ Planning pour les 15 semaines:
 - Invitation de tous les membres du groupe comme collaborateurs sur le projet
 - Invitation de M.Barthelemy à collaborer lui aussi
 - Ajout de quelques idées de projet, images et vidéos à l'appui, dans le fichier README du dépôt
+- Toutes ces étapes ont été réalisées en groupe
 
 2eme séance: 
 
 - Création d'un cahier des charges pour le projet :
 - Choix une idée de projet
 - Définition des caractéristiques détaillées de ce projet
+- Toutes ces étapes ont été réalisées en groupe
 
 3eme séance: 
 
@@ -58,8 +60,11 @@ Planning pour les 15 semaines:
 - Grâce au cahier des charges, prévision du déroulement du projet sur 15 semaines et attribution des tâches aux différents membres du groupe
 - Penser à prévoir du temps à la fin pour les tests et le débugage ainsi que pour la préparation de la présentation orale prévue à la rentrée des vacances de Pâques
 - Rédaction du planning dans le fichier README du dépôt
+- Toutes ces étapes ont été réalisées en groupe
 
 4eme séance: 
+- Début du codage de l'interface de jeu (éléments principaux comme le décor, la route, la voiture, etc...)
+- Pour ce faire, et pour commencer les bases du jeu, nous coderons ces éléments ensemble
 
 5eme séance: 
 
