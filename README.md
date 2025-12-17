@@ -38,6 +38,7 @@ SEANCE 3 :
 Planning pour les 15 semaines:
 
 1ere séance: 
+
 - Création d'un groupe de 3 (Benjamin, Jules, Luca)
 - Tous les membres du groupe se sont créés un compte sur Github
 - Création d'un dépôt public au nom du groupe sur Github
@@ -46,44 +47,43 @@ Planning pour les 15 semaines:
 - Ajout de quelques idées de projet, images et vidéos à l'appui, dans le fichier README du dépôt
 
 2eme séance: 
+
 - Création d'un cahier des charges pour le projet :
 - Choix une idée de projet
 - Définition des caractéristiques détaillées de ce projet
 
 3eme séance: 
+
 - Création d'un planning pour le projet :
 - Grâce au cahier des charges, prévision du déroulement du projet sur 15 semaines et attribution des tâches aux différents membres du groupe
-- Penser à prévoir du temps à la fin pour les tests et le débogage ainsi que pour la préparation de la présentation orale prévue à la rentrée des vacances de Pâques.
+- Penser à prévoir du temps à la fin pour les tests et le débugage ainsi que pour la préparation de la présentation orale prévue à la rentrée des vacances de Pâques
 - Rédaction du planning dans le fichier README du dépôt
 
-4eme séance: faut commencer a coder l'interface de jeu (les quatres voies et une voiture qui avance, le décor, ...)
+4eme séance: 
 
-5eme séance: faudra finir de coder les bases ( ajouter les autres voitures)
+5eme séance: 
 
-6eme séance: luca: coder les affichages( vitesse, distance, score...)
+6eme séance: 
 
-Jules: coder l'ecran principal (choix de voiture, de themes, de vues)
+7eme séance: 
 
-Benjamin : commencer a coder les super pouvoirs et les boites mysteres
+8eme séance: 
 
-7eme séance: Benjamin : continuer a coder les super pouvoirs et les boites mysteres
+9eme séance: 
 
-Jules: coder 
+10eme séance: 
 
+11eme séance: 
 
+12eme séance: 
 
-8eme séance:
+13eme séance: 
 
-9eme séance:
+14eme séance: 
 
-10eme séance:
+- Séance de tests pour débusquer toutes formes d'erreurs ou de bugs
 
-11eme séance:
+15eme séance: 
 
-12eme séance:
-
-13eme séance:
-
-14eme séance:
-
-15eme séance:
+- Nouveaux test afin de trouver des bugs ou de touts petits détails facilement modifiables
+- Début de préparation à la presentation orale de la rentrée de Pâques
