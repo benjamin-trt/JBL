@@ -46,8 +46,15 @@ Planning pour les 15 semaines:
 - Ajout de quelques idées de projet, images et vidéos à l'appui, dans le fichier README du dépôt
 
 2eme séance: 
+- Création d'un cahier des charges pour le projet :
+- Choix une idée de projet
+- Définition des caractéristiques détaillées de ce projet
 
 3eme séance: 
+- Création d'un planning pour le projet :
+- Grâce au cahier des charges, prévision du déroulement du projet sur 15 semaines et attribution des tâches aux différents membres du groupe
+- Penser à prévoir du temps à la fin pour les tests et le débogage ainsi que pour la préparation de la présentation orale prévue à la rentrée des vacances de Pâques.
+- Rédaction du planning dans le fichier README du dépôt
 
 4eme séance: 
 
