@@ -56,26 +56,34 @@ Planning pour les 15 semaines:
 - Penser à prévoir du temps à la fin pour les tests et le débogage ainsi que pour la préparation de la présentation orale prévue à la rentrée des vacances de Pâques.
 - Rédaction du planning dans le fichier README du dépôt
 
-4eme séance: 
+4eme séance: faut commencer a coder l'interface de jeu (les quatres voies et une voiture qui avance, le décor, ...)
 
-5eme séance: 
+5eme séance: faudra finir de coder les bases ( ajouter les autres voitures)
 
-6eme séance: 
+6eme séance: luca: coder les affichages( vitesse, distance, score...)
 
-7eme séance: 
+Jules: coder l'ecran principal (choix de voiture, de themes, de vues)
 
-8eme séance: 
+Benjamin : commencer a coder les super pouvoirs et les boites mysteres
 
-9eme séance: 
+7eme séance: Benjamin : continuer a coder les super pouvoirs et les boites mysteres
 
-10eme séance: 
+Jules: coder 
 
-11eme séance: 
 
-12eme séance: 
 
-13eme séance: 
+8eme séance:
 
-14eme séance: 
+9eme séance:
 
-15eme séance: 
+10eme séance:
+
+11eme séance:
+
+12eme séance:
+
+13eme séance:
+
+14eme séance:
+
+15eme séance:
