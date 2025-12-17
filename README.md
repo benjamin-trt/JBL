@@ -32,10 +32,18 @@ Voici ci-dessous un exemple de jeu existant et qui se rapproche grandement selon
 
 <img width="500" height="300" alt="image" src="https://github.com/user-attachments/assets/fd9e6338-5450-4e6e-8c13-c5658a759ce1" />
 
-séance 3:
+
+SEANCE 3 :
+
 Planning pour les 15 semaines:
 
 1ere séance: 
+- Création d'un groupe de 3 (Benjamin, Jules, Luca)
+- Tous les membres du groupe se sont créés un compte sur Github
+- Création d'un dépôt public au nom du groupe sur Github
+- Invitation de tous les membres du groupe comme collaborateurs sur le projet
+- Invitation de M.Barthelemy à collaborer lui aussi
+- Ajout de quelques idées de projet, images et vidéos à l'appui, dans le fichier README du dépôt
 
 2eme séance: 
 
