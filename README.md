@@ -117,12 +117,13 @@ coder les differentrs types de vehicules, la difficulte qui augmente etc
 
 10eme séance:
 
-11eme séance:
+11eme séance: faire les details (skins, compteurs, themes
 
-12eme séance:
+12eme séance: faire les details (mouvement des autres voitures, detail du decor, comment jouer)
 
 13eme séance:
 
 14eme séance:
 
 15eme séance:
+
