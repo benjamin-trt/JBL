@@ -37,7 +37,7 @@ SEANCE 3 :
 
 Planning pour les 15 semaines:
 
-1ere séance: 
+1ere séance:
 
 - Création d'un groupe de 3 (Benjamin, Jules, Luca)
 - Tous les membres du groupe se sont créés un compte sur Github
@@ -47,14 +47,14 @@ Planning pour les 15 semaines:
 - Ajout de quelques idées de projet, images et vidéos à l'appui, dans le fichier README du dépôt
 - Toutes ces étapes ont été réalisées en groupe
 
-2eme séance: 
+2eme séance:
 
 - Création d'un cahier des charges pour le projet :
 - Choix une idée de projet
 - Définition des caractéristiques détaillées de ce projet
 - Toutes ces étapes ont été réalisées en groupe
 
-3eme séance: 
+3eme séance:
 
 - Création d'un planning pour le projet :
 - Grâce au cahier des charges, prévision du déroulement du projet sur 15 semaines et attribution des tâches aux différents membres du groupe
@@ -62,68 +62,111 @@ Planning pour les 15 semaines:
 - Rédaction du planning dans le fichier README du dépôt
 - Toutes ces étapes ont été réalisées en groupe
 
-4eme séance: 
-- Début du codage de l'interface de jeu (éléments principaux comme le décor, la route, la voiture, etc...)
-- Pour ce faire, et pour commencer les bases du jeu, nous coderons ces éléments ensemble
+4eme séance:
 
-5eme séance: 
+- Mise en place de l’environnement de travail (Python, Pygame, éditeur de code)
+- Création du fichier principal du jeu et structure générale du programme
+- Création de la fenêtre Pygame et de la boucle principale
+- Benjamin : installation et vérification de l’environnement sur les postes
+- Luca : création de la fenêtre Pygame et de la boucle principale
+- Jules : organisation des fichiers et structure du code
 
-6eme séance: 
+5eme séance:
 
-7eme séance: 
+- Création de la route (4 voies) et du fond de jeu simple
+- Définition des limites de la route
+- Affichage de la voiture du joueur à l’écran
+- Benjamin : dessin de la route et des voies
+- Luca : affichage de la voiture du joueur
+- Jules : gestion des limites de déplacement de la voiture
 
-8eme séance: 
+6eme séance:
 
-9eme séance: 
+- Implémentation du déplacement latéral progressif de la voiture
+- Gestion des touches gauche et droite du clavier
+- Tests pour garantir un déplacement fluide et contrôlable
+- Benjamin : gestion des événements clavier
+- Luca : calcul et ajustement de la vitesse latérale
+- Jules : tests et corrections du déplacement
 
-10eme séance: 
+7eme séance:
 
-11eme séance: 
+- Mise en place du déplacement vertical simulé (route qui défile)
+- Création des premiers véhicules adverses simples
+- Apparition des véhicules sur les différentes voies
+- Benjamin : défilement de la route et du décor
+- Luca : création de la classe des véhicules adverses
+- Jules : apparition aléatoire et gestion des voies
 
-12eme séance: 
+8eme séance:
 
-13eme séance: 
+- Déplacement des véhicules adverses
+- Gestion de leur suppression lorsqu’ils sortent de l’écran
+- Tests de stabilité (pas de ralentissement du jeu)
+- Benjamin : gestion du déplacement des véhicules
+- Luca : suppression des véhicules hors écran
+- Jules : tests de performance et corrections
 
-14eme séance: 
+9eme séance:
 
-- Séance de tests pour débusquer toutes formes d'erreurs ou de bugs
-
-15eme séance: 
-
-- Nouveaux test afin de trouver des bugs ou de touts petits détails facilement modifiables
-- Début de préparation à la presentation orale de la rentrée de Pâques
-
-4eme séance: faut commencer a coder l'interface de jeu (les quatres voies et une voiture qui avance, le décor, ...) (un truc par personne)
-
-5eme séance: continuer de coder les bases ( ajouter les autres voitures)
-
-6eme séance: coder les bases(acceleration et augmentation de difficulte 
-
-7eme séance: coder les dernieres bases
-
-8eme séance: 
-
-luca: coder les mouvements de voitures grace aux fleches
-
-Jules: coder l'ecran principal 
-
-Benjamin : coder comment le jeu se termine
-
-
-
-9eme séance: 
-
-coder les differentrs types de vehicules, la difficulte qui augmente etc
+- Mise en place des collisions entre la voiture du joueur et les véhicules adverses
+- Définition de la zone de collision
+- Gestion de la fin de partie lors d’un accident
+- Benjamin : détection des collisions
+- Luca : arrêt du jeu lors d’une collision
+- Jules : tests des collisions dans différentes situations
 
 10eme séance:
 
-11eme séance: faire les details (skins, compteurs, themes
+- Mise en place d’une animation simple lors d’un accident
+- Possibilité de relancer une partie après un accident
+- Vérification que le jeu est entièrement jouable du début à la fin
+- Benjamin : animation d’accident
+- Luca : réinitialisation des variables et redémarrage du jeu
+- Jules : tests complets du cycle de jeu
 
-12eme séance: faire les details (mouvement des autres voitures, detail du decor, comment jouer)
+11eme séance:
+
+- Ajout du score de la partie
+- Ajout du compteur de temps et du compteur de distance
+- Réinitialisation des compteurs à chaque nouvelle partie
+- Benjamin : compteur de score
+- Luca : compteur de temps
+- Jules : compteur de distance et affichage à l’écran
+
+12eme séance:
+
+- Gestion de la vitesse du joueur (vitesse minimale et accélération)
+- Affichage de la vitesse actuelle et de la vitesse maximale atteinte
+- Ajustement de la difficulté en fonction du temps ou du score
+- Benjamin : gestion de la vitesse minimale
+- Luca : gestion de l’accélération et de la vitesse maximale
+- Jules : réglage progressif de la difficulté
 
 13eme séance:
 
+- Ajout des boîtes mystère sur la route
+- Implémentation des premiers pouvoirs (bouclier)
+- Gestion de la durée des pouvoirs
+- Benjamin : apparition des boîtes mystère
+- Luca : implémentation du bouclier
+- Jules : tests et équilibrage du pouvoir
+
 14eme séance:
+
+- Ajout d’éléments de design simples (couleur du paysage, formes supplémentaires...)
+- Ajout d’une musique de fond et gestion du son
+- Sauvegarde des données du joueur (meilleur score, meilleur temps)
+- Benjamin : amélioration visuelle du jeu
+- Luca : gestion du son et de la musique
+- Jules : sauvegarde et chargement du profil joueur
 
 15eme séance:
 
+- Phase finale de tests et de débogage
+- Vérification du respect du cahier des charges
+- Préparation et entraînement à la présentation orale
+- Cette fois-ci tous en groupe
+
+
+Voici le planning idéal que nous avons en tête. Cependant, nous nous doutons que ce sera plus compliqué que ça, et que nous devrons parfois inverser les rôles, nous entraider, ou passer plus de temps sur une tâche.
