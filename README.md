@@ -170,3 +170,34 @@ Planning pour les 15 semaines:
 
 
 Voici le planning idéal que nous avons en tête. Cependant, nous nous doutons que ce sera plus compliqué que ça, et que nous devrons parfois inverser les rôles, nous entraider, ou passer plus de temps sur une tâche.
+
+
+
+
+SEANCE 4 :
+
+Voici notre début de code :
+Il crée une fenêtre de jeu avec un fond de couleur que nous avons choisie (vert foncé) et avec le titre de notre jeu, "Crazy Racer". Cette fenêtre se ferme lorsque l'utilisateur appuie sur la croix en haut à droite de l'écran. La fenêtre reste ouverte tant que l'utilisateur n'appuie pas sur cette croix.
+
+
+import sys
+import pygame
+
+pygame.init()
+taille_fenetre = (1300,800)
+ecran_du_jeu = pygame.display.set_mode(taille_fenetre)
+pygame.display.set_caption("Crazy Racer")
+couleur_fond = ('aquamarine4')
+debut_jeu = True
+
+while debut_jeu == True :
+    evenement = pygame.event.get()
+    for e in evenement :
+        if e.type == pygame.QUIT :
+            debut_jeu = False
+
+    ecran_du_jeu.fill(couleur_fond)
+    pygame.display.update()
+
+pygame.quit()
+sys.exit()
