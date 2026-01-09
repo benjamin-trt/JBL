@@ -14,11 +14,11 @@ while debut_jeu == True :
         if e.type == pygame.QUIT :
             debut_jeu = False
         if e.type == pygame.KEYDOWN:
-            if e.key == pygame.K_r:
+            if e.key == pygame.K_r :
                 couleur_fond = ('red')
-            if e.key == pygame.K_b:
+            if e.key == pygame.K_b :
                 couleur_fond = ('bleu')
-            if e.key == pygame.K.backspace:
+            if e.key == pygame.K.backspace :
                 couleur_fond = ('aquamarine4')
     ecran_du_jeu.fill(couleur_fond)
     pygame.display.update()
@@ -26,4 +26,5 @@ while debut_jeu == True :
 
 
 pygame.quit()
+
 sys.exit()
