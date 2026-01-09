@@ -171,13 +171,3 @@ Planning pour les 15 semaines:
 
 Voici le planning idéal que nous avons en tête. Cependant, nous nous doutons que ce sera plus compliqué que ça, et que nous devrons parfois inverser les rôles, nous entraider, ou passer plus de temps sur une tâche.
 
-
-
-
-
-
-    ecran_du_jeu.fill(couleur_fond)
-    pygame.display.update()
-
-pygame.quit()
-sys.exit()
