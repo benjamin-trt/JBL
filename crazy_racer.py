@@ -24,7 +24,17 @@ while debut_jeu == True :
     pygame.display.update()
 
 
-
 pygame.quit()
 
 sys.exit()
+
+
+
+
+
+# bonjour, voici une version du code avec plusieurs interactions normalement:
+# -si vous cliquez sur la touche r du clavier, le fond deviendra rouge
+# -si vous cliquez sur la touche bleu du clavier, le fond deviendra bleu
+# -si vous cliquez sur la touche retour arriere du clavier, le fond redeviendra comme avant (vert foncé)
+# en classe, la fenêtre s'ouvrait et se fermait sans erreur lorsque l'on appuyait sur la croix en haut à droite
+# bon week end
