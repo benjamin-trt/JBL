@@ -14,10 +14,8 @@ BLANC = pygame.Color("white")
 NOIR = pygame.Color("black")
 GRIS = pygame.Color("gray25")
 
-
-police_titre = pygame.font.SysFont(None, 110) 
+police_titre = pygame.font.SysFont(None, 110)
 police_texte = pygame.font.SysFont(None, 50)
-
 
 bouton_jouer = pygame.Rect(525, 460, 250, 90)
 
@@ -79,4 +77,7 @@ while en_cours:
 
 pygame.quit()
 sys.exit()
+pygame.quit()
+sys.exit()
+
 
