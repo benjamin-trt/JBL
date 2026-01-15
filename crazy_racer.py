@@ -7,12 +7,11 @@ taille_fenetre = (1300, 800)
 ecran_du_jeu = pygame.display.set_mode(taille_fenetre)
 pygame.display.set_caption("Crazy Racer")
 
-AQUA = pygame.Color("aquamarine4")
-ROUGE = pygame.Color("red")
-BLEU = pygame.Color("blue")
+BLEU_CIEL = pygame.Color("deepskyblue2")
 BLANC = pygame.Color("white")
 NOIR = pygame.Color("black")
 GRIS = pygame.Color("gray25")
+ROUGE = pygame.Color("red")
 
 police_titre = pygame.font.SysFont(None, 110)
 police_texte = pygame.font.SysFont(None, 50)
@@ -24,7 +23,9 @@ JEU = 1
 FIN = 2
 etat = ACCUEIL
 
-couleur_fond = AQUA
+voiture = pygame.Rect(635, 350, 30, 60)
+vitesse = 6
+
 clock = pygame.time.Clock()
 en_cours = True
 
@@ -36,26 +37,42 @@ while en_cours:
         if e.type == pygame.MOUSEBUTTONDOWN:
             if etat == ACCUEIL and bouton_jouer.collidepoint(e.pos):
                 etat = JEU
+                voiture.x = 635
+                voiture.y = 350
 
         if e.type == pygame.KEYDOWN:
             if e.key == pygame.K_z:
                 etat = ACCUEIL
-                couleur_fond = AQUA
 
             if etat == JEU:
-                if e.key == pygame.K_r:
-                    couleur_fond = ROUGE
-                if e.key == pygame.K_b:
-                    couleur_fond = BLEU
-                if e.key == pygame.K_BACKSPACE:
-                    couleur_fond = AQUA
                 if e.key == pygame.K_ESCAPE:
                     etat = FIN
+
+    touches = pygame.key.get_pressed()
+
+    if etat == JEU:
+        if touches[pygame.K_LEFT]:
+            voiture.x -= vitesse
+        if touches[pygame.K_RIGHT]:
+            voiture.x += vitesse
+        if touches[pygame.K_UP]:
+            voiture.y -= vitesse
+        if touches[pygame.K_DOWN]:
+            voiture.y += vitesse
+
+        if voiture.left < 0:
+            voiture.left = 0
+        if voiture.right > 1300:
+            voiture.right = 1300
+        if voiture.top < 0:
+            voiture.top = 0
+        if voiture.bottom > 800:
+            voiture.bottom = 800
 
     if etat == ACCUEIL:
         ecran_du_jeu.fill(NOIR)
         titre = police_titre.render("CRAZY RACER", True, BLANC)
-        sous_titre = police_texte.render("Le jeu de vitesse et de réflexes", True, BLANC)
+        sous_titre = police_texte.render("Test your skills at high speed", True, BLANC)
         ecran_du_jeu.blit(titre, (380, 260))
         ecran_du_jeu.blit(sous_titre, (420, 360))
         pygame.draw.rect(ecran_du_jeu, GRIS, bouton_jouer, border_radius=12)
@@ -63,7 +80,8 @@ while en_cours:
         ecran_du_jeu.blit(texte_jouer, (bouton_jouer.x + 75, bouton_jouer.y + 25))
 
     elif etat == JEU:
-        ecran_du_jeu.fill(couleur_fond)
+        ecran_du_jeu.fill(BLEU_CIEL)
+        pygame.draw.rect(ecran_du_jeu, ROUGE, voiture)
 
     elif etat == FIN:
         ecran_du_jeu.fill(NOIR)
@@ -77,7 +95,3 @@ while en_cours:
 
 pygame.quit()
 sys.exit()
-pygame.quit()
-sys.exit()
-
-
