@@ -26,6 +26,8 @@ etat = ACCUEIL
 voiture = pygame.Rect(635, 350, 30, 60)
 vitesse = 6
 
+route = pygame.Rect(350, 0, 600, 800)
+
 clock = pygame.time.Clock()
 en_cours = True
 
@@ -60,14 +62,15 @@ while en_cours:
         if touches[pygame.K_DOWN]:
             voiture.y += vitesse
 
-        if voiture.left < 0:
-            voiture.left = 0
-        if voiture.right > 1300:
-            voiture.right = 1300
-        if voiture.top < 0:
-            voiture.top = 0
-        if voiture.bottom > 800:
-            voiture.bottom = 800
+       
+        if voiture.left < route.left:
+            voiture.left = route.left
+        if voiture.right > route.right:
+            voiture.right = route.right
+        if voiture.top < route.top:
+            voiture.top = route.top
+        if voiture.bottom > route.bottom:
+            voiture.bottom = route.bottom
 
     if etat == ACCUEIL:
         ecran_du_jeu.fill(NOIR)
@@ -81,6 +84,7 @@ while en_cours:
 
     elif etat == JEU:
         ecran_du_jeu.fill(BLEU_CIEL)
+        pygame.draw.rect(ecran_du_jeu, GRIS, route)
         pygame.draw.rect(ecran_du_jeu, ROUGE, voiture)
 
     elif etat == FIN:
