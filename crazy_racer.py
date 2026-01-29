@@ -2,7 +2,6 @@ import sys
 import pygame
 from fonction_ouverture import accueil
 from fonction_fin import fin
-from fonction_jeu import jeu
 
 pygame.init()
 pygame.mixer.init()
@@ -42,6 +41,10 @@ clock = pygame.time.Clock()
 en_cours = True
 son_perdu_joue = True
 
+nb_voies = 4
+largeur_voie = route.width // nb_voies
+route_offset = 0
+
 while en_cours:
     for e in pygame.event.get():
         if e.type == pygame.QUIT:
@@ -65,8 +68,17 @@ while en_cours:
 
     touches = pygame.key.get_pressed()
 
+
     if etat == JEU:
-        if touches[pygame.K_LEFT]:
+        
+        ecran_du_jeu.fill(BLEU_CIEL)
+        pygame.draw.rect(ecran_du_jeu, GRIS, route)
+        
+        for i in range(1, nb_voies):
+            x = route.left + i* largeur_voie
+            for y in range(-40, 800, 40):
+                pygame.draw.rect(ecran_du_jeu, BLANC, (x - 2, y + route_offset, 4, 20))
+        if touches[pygame.K_LEFT]: 
             voiture.x -= vitesse
         if touches[pygame.K_RIGHT]:
             voiture.x += vitesse
@@ -75,7 +87,6 @@ while en_cours:
             son_moteur.play()
         if touches[pygame.K_DOWN]:
             voiture.y += vitesse
-
 
         if voiture.left < route.left:
             voiture.left = route.left
@@ -90,10 +101,8 @@ while en_cours:
         if voiture.bottom > route.bottom:
             voiture.bottom = route.bottom
             son_perdu.play()
-        ecran_du_jeu.fill(BLEU_CIEL)
-        pygame.draw.rect(ecran_du_jeu, GRIS, route)
-        pygame.draw.rect(ecran_du_jeu, ROUGE, voiture)
-
+        pygame.draw.rect(ecran_du_jeu, ROUGE, voiture)       
+    
     if etat == ACCUEIL:
         accueil(ecran_du_jeu, police_titre, police_texte,
             NOIR, BLANC, GRIS, bouton_jouer, son_menu)
@@ -106,4 +115,5 @@ while en_cours:
 
 pygame.quit()
 sys.exit()
+
 
