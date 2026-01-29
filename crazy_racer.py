@@ -1,6 +1,8 @@
 import sys
 import pygame
 from fonction_ouverture import accueil
+from fonction_fin import fin
+from fonction_jeu import jeu
 
 pygame.init()
 pygame.mixer.init()
@@ -74,7 +76,7 @@ while en_cours:
         if touches[pygame.K_DOWN]:
             voiture.y += vitesse
 
-       
+
         if voiture.left < route.left:
             voiture.left = route.left
             son_perdu.play()
@@ -88,26 +90,16 @@ while en_cours:
         if voiture.bottom > route.bottom:
             voiture.bottom = route.bottom
             son_perdu.play()
+        ecran_du_jeu.fill(BLEU_CIEL)
+        pygame.draw.rect(ecran_du_jeu, GRIS, route)
+        pygame.draw.rect(ecran_du_jeu, ROUGE, voiture)
 
     if etat == ACCUEIL:
         accueil(ecran_du_jeu, police_titre, police_texte,
             NOIR, BLANC, GRIS, bouton_jouer, son_menu)
 
-    elif etat == JEU:
-        ecran_du_jeu.fill(BLEU_CIEL)
-        pygame.draw.rect(ecran_du_jeu, GRIS, route)
-        pygame.draw.rect(ecran_du_jeu, ROUGE, voiture)
-
     elif etat == FIN:
-        ecran_du_jeu.fill(NOIR)
-        texte_fin = police_titre.render("COURSE TERMINÉE", True, BLANC)
-        texte_retour = police_texte.render("Appuie sur Z pour retourner au menu", True, BLANC)
-        texte_sortie = police_texte.render("Appuie sur A pour sortir du jeu", True, BLANC)
-        texte_rejouer = police_texte.render("Appuie sur ENTREE pour relancer une partie", True, BLANC)
-        ecran_du_jeu.blit(texte_fin, (330, 300))
-        ecran_du_jeu.blit(texte_retour, (390, 430))
-        ecran_du_jeu.blit(texte_sortie, (390, 470))
-        ecran_du_jeu.blit(texte_rejouer, (390, 510))
+        fin(ecran_du_jeu, police_titre, police_texte, NOIR, BLANC)
 
     pygame.display.update()
     clock.tick(60)
