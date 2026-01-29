@@ -1,5 +1,6 @@
 import sys
 import pygame
+from fonction_ouverture import accueil
 
 pygame.init()
 pygame.mixer.init()
@@ -90,14 +91,8 @@ while en_cours:
             son_perdu.play()
 
     if etat == ACCUEIL:
-        ecran_du_jeu.fill(NOIR)
-        titre = police_titre.render("CRAZY RACER", True, BLANC)
-        sous_titre = police_texte.render("Test your skills at high speed", True, BLANC)
-        ecran_du_jeu.blit(titre, (380, 260))
-        ecran_du_jeu.blit(sous_titre, (420, 360))
-        pygame.draw.rect(ecran_du_jeu, GRIS, bouton_jouer, border_radius=12)
-        texte_jouer = police_texte.render("JOUER", True, BLANC)
-        ecran_du_jeu.blit(texte_jouer, (bouton_jouer.x + 75, bouton_jouer.y + 25))
+        accueil(ecran_du_jeu, police_titre, police_texte,
+            NOIR, BLANC, GRIS, bouton_jouer, son_menu)
 
     elif etat == JEU:
         ecran_du_jeu.fill(BLEU_CIEL)
@@ -118,3 +113,4 @@ while en_cours:
 
 pygame.quit()
 sys.exit()
+
