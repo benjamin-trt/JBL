@@ -2,6 +2,7 @@ import sys
 import pygame
 from fonction_ouverture import accueil
 from fonction_fin import fin
+from fonction_initial import init
 
 pygame.init()
 pygame.mixer.init()
@@ -53,17 +54,16 @@ while en_cours:
         if e.type == pygame.MOUSEBUTTONDOWN:
             if etat == ACCUEIL and bouton_jouer.collidepoint(e.pos):
                 etat = JEU
-                voiture.x = 635
-                voiture.y = 350
-                son_menu.play()
+                voiture = init(son_menu)
 
         if e.type == pygame.KEYDOWN:
             if e.key == pygame.K_z:
                 etat = ACCUEIL
             if e.key == pygame.K_a:
                 en_cours = False
-            if e.key == pygame.K_RETURN:
+            if etat == FIN and e.key == pygame.K_RETURN:
                 etat = JEU
+                voiture = init(son_menu)
                     
 
     touches = pygame.key.get_pressed()
@@ -115,5 +115,3 @@ while en_cours:
 
 pygame.quit()
 sys.exit()
-
-
