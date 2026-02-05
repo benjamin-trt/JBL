@@ -2,6 +2,7 @@ import pygame
 
 def accueil(ecran_du_jeu, police_titre, police_texte,
             NOIR, BLANC, GRIS, bouton_jouer, son_menu):
+    """Cette fonction renvoie l'écran d'accueil du jeu, et permet au joueur de lancer sa partie."""
     ecran_du_jeu.fill(NOIR)
     titre = police_titre.render("CRAZY RACER", True, BLANC)
     sous_titre = police_texte.render("Test your skills at high speed", True, BLANC)
