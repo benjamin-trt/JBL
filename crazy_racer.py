@@ -1,8 +1,8 @@
 import sys
 import pygame
-from fonction_ouverture import accueil    # Fonction qui affiche l'écran d'accueil
-from fonction_fin import fin              # Fonction qui affiche l'écran de fin
-from fonction_initial import init         # Fonction qui initialise la partie
+from fonctions.fonction_ouverture import accueil    # Fonction qui affiche l'écran d'accueil
+from fonctions.fonction_fin import fin              # Fonction qui affiche l'écran de fin
+from fonctions.fonction_initial import init         # Fonction qui initialise la partie
 
 pygame.init()               # Initialisation de pygame
 pygame.mixer.init()         # Initialisation du module audio
