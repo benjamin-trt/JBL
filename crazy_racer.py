@@ -71,7 +71,7 @@ while en_cours:
         if e.type == pygame.KEYDOWN:
             if e.key == pygame.K_z:
                 etat = ACCUEIL          # Retour à l'accueil
-            if e.key == pygame.K_a:
+            if etat == FIN and e.key == pygame.K_a:
                 en_cours = False        # Quitter le jeu
             if etat == FIN and e.key == pygame.K_RETURN:
                 etat = JEU
