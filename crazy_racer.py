@@ -8,13 +8,13 @@ pygame.init()               # Initialisation de pygame
 pygame.mixer.init()         # Initialisation du module audio
 
 # Chargement des sons
-son_perdu = pygame.mixer.Sound("bruit_fin.wav") 
+son_perdu = pygame.mixer.Sound("sons/bruit_fin.wav") 
 son_perdu.set_volume(0.5)   # Réglage du volume du son de défaite
 
-son_moteur = pygame.mixer.Sound("bruit_moteur.wav") 
+son_moteur = pygame.mixer.Sound("sons/bruit_moteur.wav") 
 son_moteur.set_volume(0.7)  # Réglage du volume du moteur
 
-son_menu = pygame.mixer.Sound("son_menu.wav") 
+son_menu = pygame.mixer.Sound("sons/son_menu.wav") 
 son_menu.set_volume(0.7)    # Réglage du volume du menu
 
 # Taille de la fenêtre du jeu
