@@ -69,6 +69,11 @@ largeur_voiture = 30
 hauteur_voiture = 60
 delai_spawn = 60
 compteur_spawn = 0
+vitesse_adversaires = 5
+vitesse_cible = 2
+vitesse_max = 13
+acceleration = 0.05
+
 while en_cours:
     for e in pygame.event.get():
         if e.type == pygame.QUIT:
@@ -118,10 +123,17 @@ while en_cours:
             x = route.left + i * largeur_voie
             for y in range(-40, 800, 40):
                 pygame.draw.rect(ecran_du_jeu, BLANC, (x - 2, y + route_offset, 4, 20))
-                
+
+        if touches[pygame.K_UP]:
+            vitesse_cible = min(vitesse_cible + 0.3, vitesse_max)
+            son_moteur.play()
+        else:
+            vitesse_cible = max(vitesse_cible - 0.1, 0)
+        vitesse_adversaires += (vitesse_cible - vitesse_adversaires) * acceleration
+
         # Déplacement et affichage des voitures adverses
         for v in voitures_adverses[:]:
-            v.y += 5   # vitesse des adversaires
+            v.y += vitesse_adversaires   # vitesse des adversaires
 
             if v.top > 800:
                 voitures_adverses.remove(v)
@@ -137,11 +149,6 @@ while en_cours:
             voiture.x -= vitesse
         if touches[pygame.K_RIGHT]:
             voiture.x += vitesse
-        if touches[pygame.K_UP]:
-            voiture.y -= vitesse
-            son_moteur.play()         # Son du moteur quand accélération
-        if touches[pygame.K_DOWN]:
-            voiture.y += vitesse
 
         # Gestion des collisions de la voiture avec les bords de la route
         if voiture.left < route.left:
