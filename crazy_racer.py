@@ -65,13 +65,13 @@ centres_voies = [
 ]
 
 voitures_adverses = []
-largeur_voiture = 30
-hauteur_voiture = 60
+largeur_voiture = 40
+hauteur_voiture = 70
 delai_spawn = 60
 compteur_spawn = 0
 vitesse_adversaires = 5
 vitesse_cible = 2
-vitesse_max = 13
+vitesse_max = 10
 acceleration = 0.05
 
 while en_cours:
@@ -103,7 +103,7 @@ while en_cours:
         compteur_spawn += 1
 
         if compteur_spawn >= delai_spawn:
-            # Nombre de voitures à créer (1 à 3 par exemple)
+            # Nombre de voitures à créer
             nb_voitures_spawn = random.randint(1, 3)
 
             for _ in range(nb_voitures_spawn):
@@ -128,7 +128,7 @@ while en_cours:
             vitesse_cible = min(vitesse_cible + 0.3, vitesse_max)
             son_moteur.play()
         else:
-            vitesse_cible = max(vitesse_cible - 0.1, 0)
+            vitesse_cible = max(vitesse_cible - 0.1, 6)
         vitesse_adversaires += (vitesse_cible - vitesse_adversaires) * acceleration
 
         # Déplacement et affichage des voitures adverses
