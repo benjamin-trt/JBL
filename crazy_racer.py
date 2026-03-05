@@ -18,6 +18,9 @@ son_moteur.set_volume(0.7)  # Réglage du volume du moteur
 son_menu = pygame.mixer.Sound("sons/son_menu.wav") 
 son_menu.set_volume(0.7)    # Réglage du volume du menu
 
+# Chargement des images
+image_accueil = pygame.image.load("images/coucher_de_soleil.png")
+
 # Taille de la fenêtre du jeu
 taille_fenetre = (1300, 800)
 ecran_du_jeu = pygame.display.set_mode(taille_fenetre)   # Création de la fenêtre
@@ -168,8 +171,7 @@ while en_cours:
         pygame.draw.rect(ecran_du_jeu, ROUGE, voiture)    # Dessin de la voiture       
     
     if etat == ACCUEIL:
-        accueil(ecran_du_jeu, police_titre, police_texte,
-            NOIR, BLANC, GRIS, bouton_jouer, son_menu)
+        accueil(image_accueil, ecran_du_jeu, police_titre, police_texte, BLANC, GRIS, bouton_jouer, son_menu)
 
     elif etat == FIN:
         fin(ecran_du_jeu, police_titre, police_texte, NOIR, BLANC)
