@@ -32,7 +32,7 @@ BLANC = pygame.Color("white")
 NOIR = pygame.Color("black")
 GRIS = pygame.Color("gray25")
 ROUGE = pygame.Color("red")
-
+VIOLET = pygame.Color("violet")
 # Différentes polices d'écriture
 police_titre = pygame.font.SysFont(None, 110)
 police_texte = pygame.font.SysFont(None, 50)
@@ -47,7 +47,8 @@ FIN = 2
 etat = ACCUEIL                  # État initial du jeu
 
 # Création de la voiture
-voiture = pygame.Rect(635, 350, 30, 60)
+voiture_init_x = 635
+voiture_init_y = 500
 vitesse = 6                     # Vitesse de déplacement de la voiture par défaut
 
 # Création de la route
@@ -85,7 +86,7 @@ while en_cours:
         if e.type == pygame.MOUSEBUTTONDOWN:
             if etat == ACCUEIL and bouton_jouer.collidepoint(e.pos):
                 etat = JEU
-                voiture = init(son_menu)     # Lancement du jeu
+                voiture = init(voiture_init_x, voiture_init_y, son_menu)     # Lancement du jeu
 
         if e.type == pygame.KEYDOWN:
             if e.key == pygame.K_z:
@@ -94,7 +95,7 @@ while en_cours:
                 en_cours = False        # Quitter le jeu
             if etat == FIN and e.key == pygame.K_RETURN:
                 etat = JEU
-                voiture = init(son_menu)     # Redémarrage après la fin
+                voiture = init(voiture_init_x, voiture_init_y, son_menu)     # Redémarrage après la fin
                     
     touches = pygame.key.get_pressed()
 
@@ -171,7 +172,7 @@ while en_cours:
         pygame.draw.rect(ecran_du_jeu, ROUGE, voiture)    # Dessin de la voiture       
     
     if etat == ACCUEIL:
-        accueil(image_accueil, ecran_du_jeu, police_titre, police_texte, BLANC, GRIS, bouton_jouer, son_menu)
+        accueil(image_accueil, ecran_du_jeu, police_titre, police_texte, BLANC, GRIS, VIOLET, bouton_jouer, son_menu)
 
     elif etat == FIN:
         fin(ecran_du_jeu, police_titre, police_texte, NOIR, BLANC)

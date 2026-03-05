@@ -1,13 +1,13 @@
 import pygame
 
-def accueil(image_accueil, ecran_du_jeu, police_titre, police_texte, BLANC, GRIS, bouton_jouer, son_menu):
+def accueil(image_accueil, ecran_du_jeu, police_titre, police_texte, BLANC, GRIS, VIOLET, bouton_jouer, son_menu):
     """Cette fonction renvoie l'écran d'accueil du jeu, et permet au joueur de lancer sa partie."""
     image_accueil = pygame.image.load("images/image_accueil.png")
     image_accueil = pygame.transform.scale(image_accueil, ecran_du_jeu.get_size())
     ecran_du_jeu.blit(image_accueil, (0, 0))
-    titre = police_titre.render("CRAZY RACER", True, BLANC)
+    titre = police_titre.render("CRAZY RACER", True, VIOLET)
     sous_titre = police_texte.render("Test your skills at high speed", True, BLANC)
-    ecran_du_jeu.blit(titre, (380, 260))
+    ecran_du_jeu.blit(titre, (425, 700))
     ecran_du_jeu.blit(sous_titre, (420, 360))
     pygame.draw.rect(ecran_du_jeu, GRIS, bouton_jouer, border_radius=12)
     texte_jouer = police_texte.render("JOUER", True, BLANC)
