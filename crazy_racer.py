@@ -19,7 +19,7 @@ son_menu = pygame.mixer.Sound("sons/son_menu.wav")
 son_menu.set_volume(0.7)    # Réglage du volume du menu
 
 # Chargement des images
-image_accueil = pygame.image.load("images/coucher_de_soleil.png")
+image_accueil = pygame.image.load("images/image_accueil.png")
 
 # Taille de la fenêtre du jeu
 taille_fenetre = (1300, 800)

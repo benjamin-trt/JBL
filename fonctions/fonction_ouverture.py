@@ -2,7 +2,7 @@ import pygame
 
 def accueil(image_accueil, ecran_du_jeu, police_titre, police_texte, BLANC, GRIS, bouton_jouer, son_menu):
     """Cette fonction renvoie l'écran d'accueil du jeu, et permet au joueur de lancer sa partie."""
-    image_accueil = pygame.image.load("images/coucher_de_soleil.png")
+    image_accueil = pygame.image.load("images/image_accueil.png")
     image_accueil = pygame.transform.scale(image_accueil, ecran_du_jeu.get_size())
     ecran_du_jeu.blit(image_accueil, (0, 0))
     titre = police_titre.render("CRAZY RACER", True, BLANC)
