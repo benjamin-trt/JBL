@@ -75,7 +75,7 @@ delai_spawn = 60
 compteur_spawn = 0
 vitesse_adversaires = 5
 vitesse_cible = 2
-vitesse_max = 10
+vitesse_max = 13
 acceleration = 0.05
 
 while en_cours:
@@ -172,7 +172,7 @@ while en_cours:
         pygame.draw.rect(ecran_du_jeu, ROUGE, voiture)    # Dessin de la voiture       
     
     if etat == ACCUEIL:
-        accueil(image_accueil, ecran_du_jeu, police_titre, police_texte, BLANC, GRIS, VIOLET, bouton_jouer, son_menu)
+        accueil(image_accueil, ecran_du_jeu, police_titre, police_texte, BLANC, ROUGE, GRIS, VIOLET, bouton_jouer, son_menu)
 
     elif etat == FIN:
         fin(ecran_du_jeu, police_titre, police_texte, NOIR, BLANC)
