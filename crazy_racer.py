@@ -33,12 +33,13 @@ NOIR = pygame.Color("black")
 GRIS = pygame.Color("gray25")
 ROUGE = pygame.Color("red")
 VIOLET = pygame.Color("violet")
+DORE = pygame.Color("gold") 
 # Différentes polices d'écriture
 police_titre = pygame.font.SysFont(None, 110)
 police_texte = pygame.font.SysFont(None, 50)
 
 # Bouton "Jouer" sur l'écran d'accueil
-bouton_jouer = pygame.Rect(525, 460, 250, 90)
+bouton_jouer = pygame.Rect(550, 400, 500, 300)
 
 # Différents états du jeu
 ACCUEIL = 0
@@ -172,7 +173,7 @@ while en_cours:
         pygame.draw.rect(ecran_du_jeu, ROUGE, voiture)    # Dessin de la voiture       
     
     if etat == ACCUEIL:
-        accueil(image_accueil, ecran_du_jeu, police_titre, police_texte, BLANC, ROUGE, GRIS, VIOLET, bouton_jouer, son_menu)
+        accueil(image_accueil, ecran_du_jeu, police_titre, police_texte, BLANC, ROUGE, GRIS, DORE, bouton_jouer, son_menu)
 
     elif etat == FIN:
         fin(ecran_du_jeu, police_titre, police_texte, NOIR, BLANC)
