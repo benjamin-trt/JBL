@@ -1,6 +1,6 @@
 import pygame
 
-def accueil(image_accueil, ecran_du_jeu, police_titre, police_texte, police_texte1, BLANC, BLANC1, GRIS1, INDIGO, ROUGE, GRIS, DORE, bouton_jouer, son_menu):
+def accueil(ecran_du_jeu, police_titre, police_texte, police_texte1, BLANC, BLANC1, GRIS1, INDIGO, ROUGE, GRIS, DORE, bouton_jouer, son_menu):
     """Cette fonction renvoie l'écran d'accueil du jeu, et permet au joueur de lancer sa partie."""
     image_accueil = pygame.image.load("images/villevoiture.png")
     image_accueil = pygame.transform.scale(image_accueil, ecran_du_jeu.get_size())

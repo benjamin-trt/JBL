@@ -2,7 +2,9 @@ import pygame
 
 def fin(ecran_du_jeu, police_titre, police_texte, NOIR, BLANC):    
     """Cette fonction revoie l'écran affiché à la fin de la partie."""
-    ecran_du_jeu.fill(NOIR)
+    image_fin = pygame.image.load("images/image_fin_nsi.png")
+    image_fin = pygame.transform.scale(image_fin, ecran_du_jeu.get_size())
+    ecran_du_jeu.blit(image_fin, (0, 0))
     texte_fin = police_titre.render("COURSE TERMINÉE", True, BLANC)
     texte_retour = police_texte.render("Appuie sur Z pour retourner au menu", True, BLANC)
     texte_sortie = police_texte.render("Appuie sur A pour sortir du jeu", True, BLANC)
