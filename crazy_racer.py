@@ -34,11 +34,15 @@ DORE = pygame.Color("gold")
 INDIGO = pygame.Color("indigo")
 GRIS1 = pygame.Color("lavenderblush4")
 BLANC1 = pygame.Color("grey70")
+ORANGE = pygame.Color("orange2")
 
 # Différentes polices d'écriture
 police_titre = pygame.font.SysFont(None, 110)
 police_texte = pygame.font.SysFont(None, 50)
 police_texte1 = pygame.font.SysFont(None, 40)
+police_retour = pygame.font.SysFont(None, 150)
+police_sortie = pygame.font.SysFont(None, 25)
+police_rejouer = pygame.font.SysFont(None, 25)
 
 # Bouton "Jouer" sur l'écran d'accueil
 bouton_jouer = pygame.Rect(400, 700, 150, 75)
@@ -179,7 +183,7 @@ while en_cours:
         accueil(ecran_du_jeu, police_titre, police_texte, police_texte1, BLANC, BLANC1, GRIS1, INDIGO, ROUGE, GRIS, DORE, bouton_jouer, son_menu)
 
     elif etat == FIN:
-        fin(ecran_du_jeu, police_titre, police_texte, NOIR, BLANC)
+        fin(ecran_du_jeu, police_titre, police_retour, police_sortie, police_rejouer, GRIS1, ORANGE, BLANC)
 
     pygame.display.update()  # Mise à jour de l'écran
     clock.tick(60)           # Limitation du jeu à 60 FPS

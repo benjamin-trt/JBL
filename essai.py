@@ -1,6 +1,7 @@
 import sys
 import pygame
 import random
+from crazy_racer import DORE
 from fonctions.fonction_ouverture import accueil    # Fonction qui affiche l'écran d'accueil
 from fonctions.fonction_fin import fin              # Fonction qui affiche l'écran de fin
 from fonctions.fonction_initial import init         # Fonction qui initialise la partie
@@ -185,8 +186,7 @@ while en_cours:
         ecran_du_jeu.blit(texte_distance, (950, 60))
     
     if etat == ACCUEIL:
-        accueil(ecran_du_jeu, police_titre, police_texte,
-            NOIR, BLANC, GRIS, bouton_jouer, son_menu)
+        accueil(ecran_du_jeu, police_titre, police_texte, police_texte1, BLANC, BLANC1, GRIS1, INDIGO, ROUGE, GRIS, DORE, bouton_jouer, son_menu)
 
     elif etat == FIN:
         fin(ecran_du_jeu, police_titre, police_texte, NOIR, BLANC)
