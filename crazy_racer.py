@@ -55,8 +55,19 @@ FIN = 2
 etat = ACCUEIL                  # État initial du jeu
 
 # Création de la voiture
+image_voiture_originale = pygame.image.load("images/voiture_nsi.png").convert_alpha()
+image_adverse_originale = pygame.image.load("images/voiture_adverse_nsi.png").convert_alpha()
+image_voiture = pygame.transform.smoothscale(
+    image_voiture_originale, (int(image_voiture_originale.get_width() * 0.25), int(image_voiture_originale.get_height() * 0.25))
+)
+image_voiture_adverse = pygame.transform.smoothscale(
+    image_adverse_originale, (int(image_adverse_originale.get_width() * 0.25), int(image_adverse_originale.get_height() * 0.25))
+)
 voiture_init_x = 635
 voiture_init_y = 500
+voiture = image_voiture.get_rect()
+voiture.x = voiture_init_x
+voiture.y = voiture_init_y
 vitesse = 6                     # Vitesse de déplacement de la voiture par défaut
 
 # Création de la route
@@ -94,7 +105,7 @@ while en_cours:
         if e.type == pygame.MOUSEBUTTONDOWN:
             if etat == ACCUEIL and bouton_jouer.collidepoint(e.pos):
                 etat = JEU
-                voiture = init(voiture_init_x, voiture_init_y, son_menu)     # Lancement du jeu
+                voiture = init(voiture.x, voiture.y, son_menu)     # Lancement du jeu
 
         if e.type == pygame.KEYDOWN:
             if e.key == pygame.K_z:
@@ -103,7 +114,7 @@ while en_cours:
                 en_cours = False        # Quitter le jeu
             if etat == FIN and e.key == pygame.K_RETURN:
                 etat = JEU
-                voiture = init(voiture_init_x, voiture_init_y, son_menu)     # Redémarrage après la fin
+                voiture = init(voiture.x, voiture.y, son_menu)     # Redémarrage après la fin
                     
     touches = pygame.key.get_pressed()
 
@@ -122,10 +133,10 @@ while en_cours:
                 voie = random.randint(0, nb_voies - 1)
                 x = centres_voies[voie] - largeur_voiture // 2
 
-                voitures_adverses.append(
-                    pygame.Rect(x, -hauteur_voiture, largeur_voiture, hauteur_voiture)
-                )
-
+                rect = image_voiture_adverse.get_rect()
+                rect.x = x
+                rect.y = -rect.height
+                voitures_adverses.append(rect)
             # Nouveau délai aléatoire à chaque spawn
             delai_spawn = random.randint(30, 80)
             compteur_spawn = 0
@@ -154,7 +165,7 @@ while en_cours:
                 son_perdu.play()
                 etat = FIN
 
-            pygame.draw.rect(ecran_du_jeu, NOIR, v)
+            ecran_du_jeu.blit(image_voiture_adverse, v)
 
         # Déplacements de la voiture
         if touches[pygame.K_LEFT]: 
@@ -177,7 +188,7 @@ while en_cours:
             voiture.bottom = route.bottom
             son_perdu.play()
 
-        pygame.draw.rect(ecran_du_jeu, ROUGE, voiture)    # Dessin de la voiture       
+        ecran_du_jeu.blit(image_voiture, voiture)    # Dessin de la voiture       
     
     if etat == ACCUEIL:
         accueil(ecran_du_jeu, police_titre, police_texte, police_texte1, BLANC, BLANC1, GRIS1, INDIGO, ROUGE, GRIS, DORE, bouton_jouer, son_menu)
