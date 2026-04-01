@@ -63,7 +63,7 @@ image_voiture = pygame.transform.smoothscale(
 image_voiture_adverse = pygame.transform.smoothscale(
     image_adverse_originale, (int(image_adverse_originale.get_width() * 0.25), int(image_adverse_originale.get_height() * 0.25))
 )
-voiture_init_x = 635
+voiture_init_x = 685
 voiture_init_y = 500
 voiture = image_voiture.get_rect()
 voiture.x = voiture_init_x
@@ -80,7 +80,7 @@ son_perdu_joue = True           # Variable pour gérer le son de défaite
 # Définiton des voies de la route
 nb_voies = 4
 largeur_voie = route.width // nb_voies
-route_offset = 0        
+route_offset = 0
 
 centres_voies = [
     route.left + largeur_voie // 2 + i*largeur_voie
@@ -90,12 +90,13 @@ centres_voies = [
 voitures_adverses = []
 largeur_voiture = 40
 hauteur_voiture = 70
-delai_spawn = 60
 compteur_spawn = 0
+delai_spawn = random.randint(50, 80)
 vitesse_adversaires = 5
 vitesse_cible = 2
 vitesse_max = 13
 acceleration = 0.05
+ 
 
 while en_cours:
     for e in pygame.event.get():
@@ -114,7 +115,12 @@ while en_cours:
                 en_cours = False        # Quitter le jeu
             if etat == FIN and e.key == pygame.K_RETURN:
                 etat = JEU
-                voiture = init(voiture.x, voiture.y, son_menu)     # Redémarrage après la fin
+                voiture = init(voiture.x, voiture.y, son_menu)
+                voitures_adverses.clear()
+                compteur_spawn = 0
+                vitesse_adversaires = 5
+                vitesse_cible = 2
+                son_perdu.stop()   
                     
     touches = pygame.key.get_pressed()
 
@@ -131,17 +137,19 @@ while en_cours:
 
             for _ in range(nb_voitures_spawn):
                 voie = random.randint(0, nb_voies - 1)
-                x = centres_voies[voie] - largeur_voiture // 2
+                x = centres_voies[voie] - image_voiture_adverse.get_width() // 2
 
                 rect = image_voiture_adverse.get_rect()
                 rect.x = x
-                rect.y = -rect.height
+                rect.y = -rect.height 
                 voitures_adverses.append(rect)
             # Nouveau délai aléatoire à chaque spawn
-            delai_spawn = random.randint(30, 80)
+            delai_spawn = random.randint(50, 80)
             compteur_spawn = 0
 
         # Dessin des lignes de séparation des voies de la route
+        route_offset += vitesse_adversaires
+        route_offset %= 40
         for i in range(1, nb_voies):
             x = route.left + i * largeur_voie
             for y in range(-40, 800, 40):
@@ -155,17 +163,19 @@ while en_cours:
         vitesse_adversaires += (vitesse_cible - vitesse_adversaires) * acceleration
 
         # Déplacement et affichage des voitures adverses
-        for v in voitures_adverses[:]:
-            v.y += vitesse_adversaires   # vitesse des adversaires
+        for rect in voitures_adverses[:]:
+            rect.y += vitesse_adversaires   # vitesse des adversaires
+            hitbox = rect.inflate(-5, -5)
+            hitbox_voiture = voiture.inflate(-5, -5) 
 
-            if v.top > 800:
-                voitures_adverses.remove(v)
+            if rect.bottom < 0:
+                voitures_adverses.remove((rect, hitbox))
 
-            if voiture.colliderect(v):
+            if hitbox_voiture.colliderect(hitbox):
                 son_perdu.play()
                 etat = FIN
 
-            ecran_du_jeu.blit(image_voiture_adverse, v)
+            ecran_du_jeu.blit(image_voiture_adverse, rect)
 
         # Déplacements de la voiture
         if touches[pygame.K_LEFT]: 
@@ -180,13 +190,11 @@ while en_cours:
             etat = FIN
         if voiture.right > route.right:
             voiture.right = route.right
-            son_perdu.play()
         if voiture.top < route.top:
-            son_perdu.play()
             voiture.top = route.top
         if voiture.bottom > route.bottom:
             voiture.bottom = route.bottom
-            son_perdu.play()
+    
 
         ecran_du_jeu.blit(image_voiture, voiture)    # Dessin de la voiture       
     
