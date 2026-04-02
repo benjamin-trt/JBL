@@ -43,6 +43,7 @@ police_texte1 = pygame.font.SysFont(None, 40)
 police_retour = pygame.font.SysFont(None, 150)
 police_sortie = pygame.font.SysFont(None, 25)
 police_rejouer = pygame.font.SysFont(None, 25)
+police_texte_score = pygame.font.SysFont(None, 25)
 
 # Bouton "Jouer" sur l'écran d'accueil
 bouton_jouer = pygame.Rect(400, 700, 150, 75)
@@ -58,10 +59,10 @@ etat = ACCUEIL                  # État initial du jeu
 image_voiture_originale = pygame.image.load("images/voiture_nsi.png").convert_alpha()
 image_adverse_originale = pygame.image.load("images/voiture_adverse_nsi.png").convert_alpha()
 image_voiture = pygame.transform.smoothscale(
-    image_voiture_originale, (int(image_voiture_originale.get_width() * 0.25), int(image_voiture_originale.get_height() * 0.25))
+    image_voiture_originale, (int(image_voiture_originale.get_width() * 0.30), int(image_voiture_originale.get_height() * 0.30))
 )
 image_voiture_adverse = pygame.transform.smoothscale(
-    image_adverse_originale, (int(image_adverse_originale.get_width() * 0.25), int(image_adverse_originale.get_height() * 0.25))
+    image_adverse_originale, (int(image_adverse_originale.get_width() * 0.30), int(image_adverse_originale.get_height() * 0.30))
 )
 voiture_init_x = 685
 voiture_init_y = 500
@@ -97,6 +98,10 @@ vitesse_cible = 2
 vitesse_max = 13
 acceleration = 0.05
  
+# Compteurs
+temps_debut = pygame.time.get_ticks()
+distance = 0
+score = 0
 
 while en_cours:
     for e in pygame.event.get():
@@ -120,7 +125,10 @@ while en_cours:
                 compteur_spawn = 0
                 vitesse_adversaires = 5
                 vitesse_cible = 2
-                son_perdu.stop()   
+                son_perdu.stop()
+                temps_debut = pygame.time.get_ticks()
+                distance = 0 
+                score = 0  
                     
     touches = pygame.key.get_pressed()
 
@@ -130,6 +138,11 @@ while en_cours:
         pygame.draw.rect(ecran_du_jeu, GRIS, route)       # Dessin de la route
         
         compteur_spawn += 1
+
+        temps = (pygame.time.get_ticks() - temps_debut) // 1000
+        distance += vitesse_adversaires * 0.1
+        if vitesse_cible >8:
+            score += vitesse_cible*distance / 1000
 
         if compteur_spawn >= delai_spawn:
             # Nombre de voitures à créer
@@ -169,13 +182,27 @@ while en_cours:
             hitbox_voiture = voiture.inflate(-5, -5) 
 
             if rect.bottom < 0:
-                voitures_adverses.remove((rect, hitbox))
+                voitures_adverses.remove(rect)
 
             if hitbox_voiture.colliderect(hitbox):
                 son_perdu.play()
                 etat = FIN
 
             ecran_du_jeu.blit(image_voiture_adverse, rect)
+
+        # Affichage des compteurs 
+        police_texte_temps = pygame.font.SysFont("impact", 30)
+        police_texte_distance = pygame.font.SysFont("impact", 30)
+        police_texte_vitesse = pygame.font.SysFont("impact", 30)
+        police_texte_score = pygame.font.SysFont("impact", 30)
+        texte_temps = police_texte_temps.render(f"Temps : {temps}s", True, NOIR)
+        texte_distance = police_texte_distance.render(f"Distance : {int(distance)} m", True, NOIR)
+        texte_vitesse = police_texte_vitesse.render(f"Vitesse : {int(vitesse_cible)*10} km/h", True, NOIR)
+        texte_score = police_texte_score.render(f"Score : {int(score)}", True, NOIR)
+        ecran_du_jeu.blit(texte_temps, (1000, 20))
+        ecran_du_jeu.blit(texte_distance, (1000, 60))
+        ecran_du_jeu.blit(texte_vitesse, (1000, 100))
+        ecran_du_jeu.blit(texte_score, (1000, 140))
 
         # Déplacements de la voiture
         if touches[pygame.K_LEFT]: 
@@ -202,8 +229,8 @@ while en_cours:
         accueil(ecran_du_jeu, police_titre, police_texte, police_texte1, BLANC, BLANC1, GRIS1, INDIGO, ROUGE, GRIS, DORE, bouton_jouer, son_menu)
 
     elif etat == FIN:
-        fin(ecran_du_jeu, police_titre, police_retour, police_sortie, police_rejouer, GRIS1, ORANGE, BLANC)
-
+        fin(ecran_du_jeu, police_titre, police_retour, police_sortie, police_rejouer, score, GRIS1, ORANGE, BLANC)
+    
     pygame.display.update()  # Mise à jour de l'écran
     clock.tick(60)           # Limitation du jeu à 60 FPS
 
