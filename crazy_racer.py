@@ -55,7 +55,8 @@ JEU = 1
 FIN = 2
 etat = ACCUEIL                  # État initial du jeu
 
-# Création de la voiture
+# Création de la voiture et de la mer
+image_mer = pygame.image.load("images/mer_nsi.png")
 image_voiture_originale = pygame.image.load("images/voiture_nsi.png").convert_alpha()
 image_adverse_originale = pygame.image.load("images/voiture_adverse_nsi.png").convert_alpha()
 image_voiture = pygame.transform.smoothscale(
@@ -82,6 +83,7 @@ son_perdu_joue = True           # Variable pour gérer le son de défaite
 nb_voies = 4
 largeur_voie = route.width // nb_voies
 route_offset = 0
+mer_offset = 0
 
 centres_voies = [
     route.left + largeur_voie // 2 + i*largeur_voie
@@ -134,7 +136,17 @@ while en_cours:
 
     if etat == JEU:
         
-        ecran_du_jeu.fill(BLEU_CIEL)                      # Dessin de la mer
+        largeur_mer_gauche = route.left
+        largeur_mer_droite = 1300 - route.right
+
+        image_mer_gauche = pygame.transform.scale(image_mer, (largeur_mer_gauche, 800))
+        image_mer_droite = pygame.transform.scale(image_mer, (largeur_mer_droite, 800))
+        mer_offset += vitesse_adversaires
+        ecran_du_jeu.blit(image_mer_gauche, (0, mer_offset % 800 - 800))
+        ecran_du_jeu.blit(image_mer_gauche, (0, mer_offset % 800))
+
+        ecran_du_jeu.blit(image_mer_droite, (route.right, mer_offset % 800 - 800))
+        ecran_du_jeu.blit(image_mer_droite, (route.right, mer_offset % 800))
         pygame.draw.rect(ecran_du_jeu, GRIS, route)       # Dessin de la route
         
         compteur_spawn += 1
@@ -146,7 +158,7 @@ while en_cours:
 
         if compteur_spawn >= delai_spawn:
             # Nombre de voitures à créer
-            nb_voitures_spawn = random.randint(1, 3)
+            nb_voitures_spawn = random.randint(1, 2)
 
             for _ in range(nb_voitures_spawn):
                 voie = random.randint(0, nb_voies - 1)
@@ -195,10 +207,10 @@ while en_cours:
         police_texte_distance = pygame.font.SysFont("impact", 30)
         police_texte_vitesse = pygame.font.SysFont("impact", 30)
         police_texte_score = pygame.font.SysFont("impact", 30)
-        texte_temps = police_texte_temps.render(f"Temps : {temps}s", True, NOIR)
-        texte_distance = police_texte_distance.render(f"Distance : {int(distance)} m", True, NOIR)
-        texte_vitesse = police_texte_vitesse.render(f"Vitesse : {int(vitesse_cible)*10} km/h", True, NOIR)
-        texte_score = police_texte_score.render(f"Score : {int(score)}", True, NOIR)
+        texte_temps = police_texte_temps.render(f"Temps : {temps}s", True, BLANC)
+        texte_distance = police_texte_distance.render(f"Distance : {int(distance)} m", True, BLANC)
+        texte_vitesse = police_texte_vitesse.render(f"Vitesse : {int(vitesse_cible)*10} km/h", True, BLANC)
+        texte_score = police_texte_score.render(f"Score : {int(score)}", True, BLANC)
         ecran_du_jeu.blit(texte_temps, (1000, 20))
         ecran_du_jeu.blit(texte_distance, (1000, 60))
         ecran_du_jeu.blit(texte_vitesse, (1000, 100))
@@ -213,8 +225,6 @@ while en_cours:
         # Gestion des collisions de la voiture avec les bords de la route
         if voiture.left < route.left:
             voiture.left = route.left
-            son_perdu.play()
-            etat = FIN
         if voiture.right > route.right:
             voiture.right = route.right
         if voiture.top < route.top:
