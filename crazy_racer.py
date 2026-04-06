@@ -17,6 +17,8 @@ son_moteur.set_volume(0.7)  # Réglage du volume du moteur
 
 son_menu = pygame.mixer.Sound("sons/son_menu.wav") 
 son_menu.set_volume(0.7)    # Réglage du volume du menu
+moteur_en_cours = False     
+son_defaite = False
 
 # Taille de la fenêtre du jeu
 taille_fenetre = (1300, 800)
@@ -128,6 +130,7 @@ while en_cours:
                 vitesse_adversaires = 5
                 vitesse_cible = 2
                 son_perdu.stop()
+                son_defaite = False
                 temps_debut = pygame.time.get_ticks()
                 distance = 0 
                 score = 0  
@@ -153,6 +156,9 @@ while en_cours:
 
         temps = (pygame.time.get_ticks() - temps_debut) // 1000
         distance += vitesse_adversaires * 0.1
+
+        son_menu.stop() 
+        
         if vitesse_cible >8:
             score += vitesse_cible*distance / 1000
 
@@ -182,9 +188,15 @@ while en_cours:
 
         if touches[pygame.K_UP]:
             vitesse_cible = min(vitesse_cible + 0.3, vitesse_max)
-            son_moteur.play()
+            if not moteur_en_cours:
+                son_moteur.play(-1)  
+                moteur_en_cours = True
         else:
             vitesse_cible = max(vitesse_cible - 0.1, 6)
+            if moteur_en_cours:
+                son_moteur.stop()
+                moteur_en_cours = False
+
         vitesse_adversaires += (vitesse_cible - vitesse_adversaires) * acceleration
 
         # Déplacement et affichage des voitures adverses
@@ -197,7 +209,10 @@ while en_cours:
                 voitures_adverses.remove(rect)
 
             if hitbox_voiture.colliderect(hitbox):
-                son_perdu.play()
+                if not son_defaite:
+                    son_perdu.play()
+                    son_defaite = True
+                    son_moteur.stop()
                 etat = FIN
 
             ecran_du_jeu.blit(image_voiture_adverse, rect)
@@ -236,6 +251,8 @@ while en_cours:
         ecran_du_jeu.blit(image_voiture, voiture)    # Dessin de la voiture       
     
     if etat == ACCUEIL:
+        if not pygame.mixer.get_busy():
+            son_menu.play(-1)
         accueil(ecran_du_jeu, police_titre, police_texte, police_texte1, BLANC, BLANC1, GRIS1, INDIGO, ROUGE, GRIS, DORE, bouton_jouer, son_menu)
 
     elif etat == FIN:
