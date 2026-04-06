@@ -9,16 +9,21 @@ pygame.init()               # Initialisation de pygame
 pygame.mixer.init()         # Initialisation du module audio
 
 # Chargement des sons
-son_perdu = pygame.mixer.Sound("sons/bruit_fin.wav") 
+son_perdu = pygame.mixer.Sound("sons/crash_voiture.wav") 
 son_perdu.set_volume(0.5)   # Réglage du volume du son de défaite
 
-son_moteur = pygame.mixer.Sound("sons/bruit_moteur.wav") 
+son_moteur = pygame.mixer.Sound("sons/son_voiture.wav") 
 son_moteur.set_volume(0.7)  # Réglage du volume du moteur
 
 son_menu = pygame.mixer.Sound("sons/son_menu.wav") 
 son_menu.set_volume(0.7)    # Réglage du volume du menu
+
+son_fin = pygame.mixer.Sound("sons/bruit_fin1.wav")
+son_fin.set_volume(0.7)     # Réglage du volume du son de fin
+
 moteur_en_cours = False     
 son_defaite = False
+channel_perdu = pygame.mixer.Channel(1)
 
 # Taille de la fenêtre du jeu
 taille_fenetre = (1300, 800)
@@ -158,7 +163,7 @@ while en_cours:
         distance += vitesse_adversaires * 0.1
 
         son_menu.stop() 
-        
+
         if vitesse_cible >8:
             score += vitesse_cible*distance / 1000
 
@@ -210,9 +215,10 @@ while en_cours:
 
             if hitbox_voiture.colliderect(hitbox):
                 if not son_defaite:
-                    son_perdu.play()
+                    channel_perdu.play(son_perdu)
                     son_defaite = True
                     son_moteur.stop()
+
                 etat = FIN
 
             ecran_du_jeu.blit(image_voiture_adverse, rect)
@@ -256,6 +262,9 @@ while en_cours:
         accueil(ecran_du_jeu, police_titre, police_texte, police_texte1, BLANC, BLANC1, GRIS1, INDIGO, ROUGE, GRIS, DORE, bouton_jouer, son_menu)
 
     elif etat == FIN:
+        if son_defaite and not channel_perdu.get_busy():
+            channel_perdu.play(son_fin)
+            son_defaite = False
         fin(ecran_du_jeu, police_titre, police_retour, police_sortie, police_rejouer, score, GRIS1, ORANGE, BLANC)
     
     pygame.display.update()  # Mise à jour de l'écran
