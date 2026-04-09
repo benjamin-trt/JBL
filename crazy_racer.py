@@ -15,7 +15,7 @@ son_perdu.set_volume(0.5)   # Réglage du volume du son de défaite
 son_moteur = pygame.mixer.Sound("sons/son_voiture.wav") 
 son_moteur.set_volume(0.7)  # Réglage du volume du moteur
 
-son_menu = pygame.mixer.Sound("sons/son_menu.wav") 
+son_menu = pygame.mixer.Sound("sons/son_menu2.wav") 
 son_menu.set_volume(0.7)    # Réglage du volume du menu
 
 son_fin = pygame.mixer.Sound("sons/bruit_fin1.wav")
@@ -78,8 +78,7 @@ mask_adverse = pygame.mask.from_surface(image_voiture_adverse)
 voiture_init_x = 685
 voiture_init_y = 500
 voiture = image_voiture.get_rect()
-voiture.x = voiture_init_x
-voiture.y = voiture_init_y
+hitbox_voiture = pygame.Rect(voiture_init_x + 20, voiture_init_y + 10, 60, 150)
 vitesse = 6                     # Vitesse de déplacement de la voiture par défaut
 
 # Création de la route
@@ -270,7 +269,7 @@ while en_cours:
             p.y += vitesse_adversaires
             if p.top > 800:
                 powerups.remove(p)
-            if voiture.colliderect(p):
+            if hitbox_voiture.colliderect(p):
                     bouclier_actif = True
                     temps_bouclier = pygame.time.get_ticks()
                     powerups.remove(p)
@@ -298,24 +297,23 @@ while en_cours:
         ecran_du_jeu.blit(texte_vitesse, (1000, 100))
         ecran_du_jeu.blit(texte_score, (1000, 140))
 
-        # Déplacements de la voiture
-        if touches[pygame.K_LEFT]: 
+        # Déplacement de la voiture
+        if touches[pygame.K_LEFT]:
             voiture.x -= vitesse
         if touches[pygame.K_RIGHT]:
             voiture.x += vitesse
 
-        # Gestion des collisions de la voiture avec les bords de la route
-        if voiture.left < route.left:
-            voiture.left = route.left
-        if voiture.right > route.right:
-            voiture.right = route.right
-        if voiture.top < route.top:
-            voiture.top = route.top
-        if voiture.bottom > route.bottom:
-            voiture.bottom = route.bottom
-    
+        #Rester dans la route
+        voiture.x = max(route.left, min(voiture.x, route.right - image_voiture.get_width()))
+        
 
-        ecran_du_jeu.blit(image_voiture, voiture)    # Dessin de la voiture   
+        hitbox_voiture.x = max(route.left, min(hitbox_voiture.x, route.right - image_voiture.get_width()))
+# Mettre à jour la hitbox
+        hitbox_voiture.x = voiture.x + 14
+        hitbox_voiture.y = voiture.y + 10
+        # Dessin
+        ecran_du_jeu.blit(image_voiture, voiture)
+
     
     if etat == ACCUEIL:
         if not pygame.mixer.get_busy():
