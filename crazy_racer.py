@@ -69,9 +69,12 @@ image_adverse_originale = pygame.image.load("images/voiture_adverse_nsi.png").co
 image_voiture = pygame.transform.smoothscale(
     image_voiture_originale, (int(image_voiture_originale.get_width() * 0.30), int(image_voiture_originale.get_height() * 0.30))
 )
+mask_voiture = pygame.mask.from_surface(image_voiture)
 image_voiture_adverse = pygame.transform.smoothscale(
     image_adverse_originale, (int(image_adverse_originale.get_width() * 0.30), int(image_adverse_originale.get_height() * 0.30))
 )
+mask_adverse = pygame.mask.from_surface(image_voiture_adverse)
+
 voiture_init_x = 685
 voiture_init_y = 500
 voiture = image_voiture.get_rect()
@@ -104,9 +107,24 @@ compteur_spawn = 0
 delai_spawn = random.randint(50, 80)
 vitesse_adversaires = 5
 vitesse_cible = 2
-vitesse_max = 13
+vitesse_max = 15
 acceleration = 0.05
+
+# Création du bouclier
+image_bouclier_original = pygame.image.load("images/bouclier_nsi.png").convert_alpha()
+largeur_bouclier = int(largeur_voie * 0.5)
+hauteur_bouclier = int(largeur_bouclier * 1)
+image_bouclier = pygame.transform.smoothscale(image_bouclier_original, (largeur_bouclier, hauteur_bouclier))
  
+powerups = []
+compteur_powerup = 0
+delai_powerup = 300
+
+bouclier_actif = False
+temps_bouclier = 0
+DUREE_BOUCLIER = 3000
+
+
 # Compteurs
 temps_debut = pygame.time.get_ticks()
 distance = 0
@@ -120,7 +138,7 @@ while en_cours:
         if e.type == pygame.MOUSEBUTTONDOWN:
             if etat == ACCUEIL and bouton_jouer.collidepoint(e.pos):
                 etat = JEU
-                voiture = init(voiture.x, voiture.y, son_menu)     # Lancement du jeu
+                voiture = init(voiture_init_x, voiture_init_y, son_menu)     # Lancement du jeu
 
         if e.type == pygame.KEYDOWN:
             if e.key == pygame.K_z:
@@ -129,7 +147,7 @@ while en_cours:
                 en_cours = False        # Quitter le jeu
             if etat == FIN and e.key == pygame.K_RETURN:
                 etat = JEU
-                voiture = init(voiture.x, voiture.y, son_menu)
+                voiture = init(voiture_init_x, voiture_init_y, son_menu)
                 voitures_adverses.clear()
                 compteur_spawn = 0
                 vitesse_adversaires = 5
@@ -158,9 +176,10 @@ while en_cours:
         pygame.draw.rect(ecran_du_jeu, GRIS, route)       # Dessin de la route
         
         compteur_spawn += 1
+        compteur_powerup += 1
 
         temps = (pygame.time.get_ticks() - temps_debut) // 1000
-        distance += vitesse_adversaires * 0.1
+        distance += vitesse_cible / 15
 
         son_menu.stop() 
 
@@ -182,6 +201,27 @@ while en_cours:
             # Nouveau délai aléatoire à chaque spawn
             delai_spawn = random.randint(50, 80)
             compteur_spawn = 0
+
+        # Spawn des boucliers
+        if compteur_powerup >= delai_powerup:
+            voies_libres = []
+            for i in range(nb_voies):
+                libre = True
+                for v in voitures_adverses:
+                    voie_v = (v.centerx - route.left) // largeur_voie
+                    if voie_v == i and v.y < 200:
+                        libre = False
+                if libre:
+                    voies_libres.append(i)
+
+            if voies_libres:
+                voie = random.choice(voies_libres)
+                rect = image_bouclier.get_rect()
+                rect.centerx = centres_voies[voie]
+                rect.y = -rect.height
+                powerups.append(rect)
+
+            compteur_powerup = 0
 
         # Dessin des lignes de séparation des voies de la route
         route_offset += vitesse_adversaires
@@ -207,21 +247,38 @@ while en_cours:
         # Déplacement et affichage des voitures adverses
         for rect in voitures_adverses[:]:
             rect.y += vitesse_adversaires   # vitesse des adversaires
-            hitbox = rect.inflate(-5, -5)
-            hitbox_voiture = voiture.inflate(-5, -5) 
+            offset = (rect.x - voiture.x, rect.y - voiture.y) 
 
             if rect.bottom < 0:
                 voitures_adverses.remove(rect)
 
-            if hitbox_voiture.colliderect(hitbox):
-                if not son_defaite:
-                    channel_perdu.play(son_perdu)
-                    son_defaite = True
-                    son_moteur.stop()
-
-                etat = FIN
+            if mask_voiture.overlap(mask_adverse, offset):
+                if bouclier_actif:
+                    voitures_adverses.remove(rect)
+                    bouclier_actif = False
+                    
+                else:
+                    if not son_defaite:
+                        channel_perdu.play(son_perdu)
+                        son_defaite = True
+                        son_moteur.stop()
+                    etat = FIN
 
             ecran_du_jeu.blit(image_voiture_adverse, rect)
+
+        for p in powerups[:]:
+            p.y += vitesse_adversaires
+            if p.top > 800:
+                powerups.remove(p)
+            if voiture.colliderect(p):
+                    bouclier_actif = True
+                    temps_bouclier = pygame.time.get_ticks()
+                    powerups.remove(p)
+
+            ecran_du_jeu.blit(image_bouclier, p)
+
+        if bouclier_actif and pygame.time.get_ticks() - temps_bouclier > DUREE_BOUCLIER:
+            bouclier_actif = False
 
         # Affichage des compteurs 
         police_texte_temps = pygame.font.SysFont("impact", 30)
@@ -232,6 +289,10 @@ while en_cours:
         texte_distance = police_texte_distance.render(f"Distance : {int(distance)} m", True, BLANC)
         texte_vitesse = police_texte_vitesse.render(f"Vitesse : {int(vitesse_cible)*10} km/h", True, BLANC)
         texte_score = police_texte_score.render(f"Score : {int(score)}", True, BLANC)
+        if bouclier_actif:
+            police_texte_bouclier = pygame.font.SysFont("impact", 30)
+            texte_bouclier = police_texte_bouclier.render("Bouclier actif", True, DORE)
+            ecran_du_jeu.blit(texte_bouclier, (1000, 180))
         ecran_du_jeu.blit(texte_temps, (1000, 20))
         ecran_du_jeu.blit(texte_distance, (1000, 60))
         ecran_du_jeu.blit(texte_vitesse, (1000, 100))
@@ -254,7 +315,7 @@ while en_cours:
             voiture.bottom = route.bottom
     
 
-        ecran_du_jeu.blit(image_voiture, voiture)    # Dessin de la voiture       
+        ecran_du_jeu.blit(image_voiture, voiture)    # Dessin de la voiture   
     
     if etat == ACCUEIL:
         if not pygame.mixer.get_busy():
