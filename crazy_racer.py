@@ -190,13 +190,15 @@ while en_cours:
             nouveau_record = True
             temps_record = pygame.time.get_ticks()
 
-        if nouveau_record:
-            if pygame.time.get_ticks() - temps_record < 3000:
-                police_texte_record = pygame.font.SysFont("impact", 30)
-                texte_record = police_texte_record.render("Nouveau record !", True, DORE)
-                ecran_du_jeu.blit(texte_record, (1000, 220))
-            else:
-                nouveau_record = False
+        if etat == JEU:
+            if nouveau_record:
+                if pygame.time.get_ticks() - temps_record < 3000:
+                    police_texte_record = pygame.font.SysFont("impact", 30)
+                    texte_record = police_texte_record.render("Nouveau record !", True, DORE)
+                    ecran_du_jeu.blit(texte_record, (1000, 220))
+        else:
+            nouveau_record = False
+              
 
         son_menu.stop() 
 
@@ -302,18 +304,21 @@ while en_cours:
         police_texte_distance = pygame.font.SysFont("impact", 30)
         police_texte_vitesse = pygame.font.SysFont("impact", 30)
         police_texte_score = pygame.font.SysFont("impact", 30)
+        police_texte_highest_score = pygame.font.SysFont("impact", 30)
         texte_temps = police_texte_temps.render(f"Temps : {temps}s", True, BLANC)
         texte_distance = police_texte_distance.render(f"Distance : {int(distance)} m", True, BLANC)
         texte_vitesse = police_texte_vitesse.render(f"Vitesse : {int(vitesse_cible)*10} km/h", True, BLANC)
         texte_score = police_texte_score.render(f"Score : {int(score)}", True, BLANC)
+        texte_highest_score = police_texte_highest_score.render(f"Record : {int(meilleur_score)}", True, BLANC)
         if bouclier_actif:
             police_texte_bouclier = pygame.font.SysFont("impact", 30)
             texte_bouclier = police_texte_bouclier.render("Bouclier actif", True, DORE)
-            ecran_du_jeu.blit(texte_bouclier, (1000, 180))
+            ecran_du_jeu.blit(texte_bouclier, (1000, 260))
         ecran_du_jeu.blit(texte_temps, (1000, 20))
         ecran_du_jeu.blit(texte_distance, (1000, 60))
         ecran_du_jeu.blit(texte_vitesse, (1000, 100))
         ecran_du_jeu.blit(texte_score, (1000, 140))
+        ecran_du_jeu.blit(texte_highest_score, (1000, 180))
 
         # Déplacement de la voiture
         if touches[pygame.K_LEFT]:
@@ -349,7 +354,7 @@ while en_cours:
     
         police_texte_meilleur_score = pygame.font.SysFont("showcardgothic", 40, italic=True)
         texte_meilleur_score = police_texte_meilleur_score.render(f"Meilleur score : {int(meilleur_score)}", True, GRIS1)
-        ecran_du_jeu.blit(texte_meilleur_score, (350, 600))
+        ecran_du_jeu.blit(texte_meilleur_score, (345, 650))
     
     pygame.display.update()  # Mise à jour de l'écran
     clock.tick(60)           # Limitation du jeu à 60 FPS
