@@ -243,7 +243,8 @@ while en_cours:
             compteur_powerup = 0
 
         # Dessin des lignes de séparation des voies de la route
-        route_offset += vitesse_adversaires
+        vitesse_lignes = vitesse_cible * 2
+        route_offset += vitesse_lignes
         route_offset %= 40
         for i in range(1, nb_voies):
             x = route.left + i * largeur_voie
