@@ -128,6 +128,10 @@ DUREE_BOUCLIER = 3000
 temps_debut = pygame.time.get_ticks()
 distance = 0
 score = 0
+meilleur_score = 0
+nouveau_record = False
+temps_record = 0
+
 
 while en_cours:
     for e in pygame.event.get():
@@ -155,8 +159,9 @@ while en_cours:
                 son_defaite = False
                 temps_debut = pygame.time.get_ticks()
                 distance = 0 
-                score = 0  
-                    
+                score = 0 
+                nouveau_record = False 
+
     touches = pygame.key.get_pressed()
 
     if etat == JEU:
@@ -179,6 +184,19 @@ while en_cours:
 
         temps = (pygame.time.get_ticks() - temps_debut) // 1000
         distance += vitesse_cible / 15
+
+        if score > meilleur_score:
+            meilleur_score = score
+            nouveau_record = True
+            temps_record = pygame.time.get_ticks()
+
+        if nouveau_record:
+            if pygame.time.get_ticks() - temps_record < 3000:
+                police_texte_record = pygame.font.SysFont("impact", 30)
+                texte_record = police_texte_record.render("Nouveau record !", True, DORE)
+                ecran_du_jeu.blit(texte_record, (1000, 220))
+            else:
+                nouveau_record = False
 
         son_menu.stop() 
 
@@ -308,10 +326,10 @@ while en_cours:
         
 
         hitbox_voiture.x = max(route.left, min(hitbox_voiture.x, route.right - image_voiture.get_width()))
-# Mettre à jour la hitbox
+        
         hitbox_voiture.x = voiture.x + 14
         hitbox_voiture.y = voiture.y + 10
-        # Dessin
+        
         ecran_du_jeu.blit(image_voiture, voiture)
 
     
@@ -324,7 +342,14 @@ while en_cours:
         if son_defaite and not channel_perdu.get_busy():
             channel_perdu.play(son_fin)
             son_defaite = False
+        if score > meilleur_score:
+            meilleur_score = score
+        
         fin(ecran_du_jeu, police_titre, police_retour, police_sortie, police_rejouer, score, GRIS1, ORANGE, BLANC)
+    
+        police_texte_meilleur_score = pygame.font.SysFont("showcardgothic", 40, italic=True)
+        texte_meilleur_score = police_texte_meilleur_score.render(f"Meilleur score : {int(meilleur_score)}", True, GRIS1)
+        ecran_du_jeu.blit(texte_meilleur_score, (350, 600))
     
     pygame.display.update()  # Mise à jour de l'écran
     clock.tick(60)           # Limitation du jeu à 60 FPS
