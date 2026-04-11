@@ -16,10 +16,10 @@ son_moteur = pygame.mixer.Sound("sons/son_voiture.wav")
 son_moteur.set_volume(0.7)  # Réglage du volume du moteur
 
 son_menu = pygame.mixer.Sound("sons/son_menu2.wav") 
-son_menu.set_volume(0.7)    # Réglage du volume du menu
+son_menu.set_volume(0.99)    # Réglage du volume du menu
 
 son_fin = pygame.mixer.Sound("sons/bruit_fin1.wav")
-son_fin.set_volume(0.7)     # Réglage du volume du son de fin
+son_fin.set_volume(0.3)     # Réglage du volume du son de fin
 
 moteur_en_cours = False     
 son_defaite = False
@@ -142,16 +142,33 @@ while en_cours:
             if etat == ACCUEIL and bouton_jouer.collidepoint(e.pos):
                 etat = JEU
                 voiture = init(voiture_init_x, voiture_init_y, son_menu)     # Lancement du jeu
+                temps_debut = pygame.time.get_ticks()
 
         if e.type == pygame.KEYDOWN:
             if e.key == pygame.K_z:
                 etat = ACCUEIL          # Retour à l'accueil
+                # Reset du jeu
+                voitures_adverses.clear()
+                powerups.clear()
+                compteur_spawn = 0
+                compteur_powerup = 0
+
+                vitesse_adversaires = 5
+                vitesse_cible = 2
+                son_moteur.stop()
+                son_perdu.stop()
+                son_defaite = False
+
+                distance = 0
+                score = 0
+                nouveau_record = False
             if etat == FIN and e.key == pygame.K_a:
                 en_cours = False        # Quitter le jeu
             if etat == FIN and e.key == pygame.K_RETURN:
                 etat = JEU
                 voiture = init(voiture_init_x, voiture_init_y, son_menu)
                 voitures_adverses.clear()
+                powerups.clear()
                 compteur_spawn = 0
                 vitesse_adversaires = 5
                 vitesse_cible = 2
@@ -165,7 +182,7 @@ while en_cours:
     touches = pygame.key.get_pressed()
 
     if etat == JEU:
-        
+
         largeur_mer_gauche = route.left
         largeur_mer_droite = 1300 - route.right
 
@@ -182,8 +199,8 @@ while en_cours:
         compteur_spawn += 1
         compteur_powerup += 1
 
-        temps = (pygame.time.get_ticks() - temps_debut) // 1000
-        distance += vitesse_cible / 15
+        temps = float((pygame.time.get_ticks() - temps_debut) // 1000)
+        distance += vitesse_cible / 20
 
         if score > meilleur_score:
             meilleur_score = score
@@ -203,7 +220,7 @@ while en_cours:
         son_menu.stop() 
 
         if vitesse_cible >8:
-            score += vitesse_cible*distance / 1000
+            score += vitesse_cible*distance / 3000
 
         if compteur_spawn >= delai_spawn:
             # Nombre de voitures à créer
@@ -283,6 +300,9 @@ while en_cours:
                         son_defaite = True
                         son_moteur.stop()
                     etat = FIN
+                    if e.key == pygame.K_z:
+                        son_perdu.stop()
+                        son_defaite = False
 
             ecran_du_jeu.blit(image_voiture_adverse, rect)
 
