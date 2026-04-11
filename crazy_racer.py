@@ -123,6 +123,15 @@ bouclier_actif = False
 temps_bouclier = 0
 DUREE_BOUCLIER = 3000
 
+# Autres power-ups effets
+slow_actif = False
+temps_slow = 0
+DUREE_SLOW = 4000
+
+multiplicateur = 1
+temps_multi = 0
+DUREE_MULTI = 5000
+
 
 # Compteurs
 temps_debut = pygame.time.get_ticks()
@@ -215,12 +224,19 @@ while en_cours:
                     ecran_du_jeu.blit(texte_record, (1000, 220))
         else:
             nouveau_record = False
+        # fin slow
+        if slow_actif and pygame.time.get_ticks() - temps_slow > DUREE_SLOW:
+            slow_actif = False
+
+        # fin multiplicateur
+        if multiplicateur == 2 and pygame.time.get_ticks() - temps_multi > DUREE_MULTI:
+            multiplicateur = 1          
               
 
         son_menu.stop() 
 
         if vitesse_cible >8:
-            score += vitesse_cible*distance / 3000
+            score += multiplicateur * vitesse_cible * distance / 3000
 
         if compteur_spawn >= delai_spawn:
             # Nombre de voitures à créer
@@ -255,7 +271,11 @@ while en_cours:
                 rect = image_bouclier.get_rect()
                 rect.centerx = centres_voies[voie]
                 rect.y = -rect.height
-                powerups.append(rect)
+                type_powerup = random.choice(["bouclier", "slow", "multi", "destruction"])
+                powerups.append({
+                    "rect": rect,
+                    "type": type_powerup
+                })
 
             compteur_powerup = 0
 
@@ -283,7 +303,11 @@ while en_cours:
 
         # Déplacement et affichage des voitures adverses
         for rect in voitures_adverses[:]:
-            rect.y += vitesse_adversaires   # vitesse des adversaires
+            vitesse_effective = vitesse_adversaires
+            if slow_actif:
+                vitesse_effective *= 0.5
+
+            rect.y += vitesse_effective   # vitesse des adversaires
             offset = (rect.x - voiture.x, rect.y - voiture.y) 
 
             if rect.bottom < 0:
@@ -307,15 +331,38 @@ while en_cours:
             ecran_du_jeu.blit(image_voiture_adverse, rect)
 
         for p in powerups[:]:
-            p.y += vitesse_adversaires
-            if p.top > 800:
+            rect = p["rect"]
+
+            vitesse_effective = vitesse_adversaires
+            if slow_actif:
+                vitesse_effective *= 0.5
+
+            rect.y += vitesse_effective
+
+            if rect.top > 800:
                 powerups.remove(p)
-            if hitbox_voiture.colliderect(p):
+
+            if hitbox_voiture.colliderect(rect):
+                if p["type"] == "bouclier":
                     bouclier_actif = True
                     temps_bouclier = pygame.time.get_ticks()
-                    powerups.remove(p)
 
-            ecran_du_jeu.blit(image_bouclier, p)
+                elif p["type"] == "slow":
+                    slow_actif = True
+                    temps_slow = pygame.time.get_ticks()
+
+                elif p["type"] == "multi":
+                    multiplicateur = 2
+                    temps_multi = pygame.time.get_ticks()
+
+                elif p["type"] == "destruction":
+                    voitures_adverses.clear()
+
+                powerups.remove(p)
+
+            ecran_du_jeu.blit(image_bouclier, rect)
+
+            
 
         if bouclier_actif and pygame.time.get_ticks() - temps_bouclier > DUREE_BOUCLIER:
             bouclier_actif = False
@@ -335,6 +382,14 @@ while en_cours:
             police_texte_bouclier = pygame.font.SysFont("impact", 30)
             texte_bouclier = police_texte_bouclier.render("Bouclier actif", True, DORE)
             ecran_du_jeu.blit(texte_bouclier, (1000, 260))
+        if slow_actif:
+            police_texte_slow = pygame.font.SysFont("impact", 30)
+            texte_slow = police_texte_slow.render("Slow actif", True, DORE)
+            ecran_du_jeu.blit(texte_slow, (1000, 300))
+        if multiplicateur == 2:
+            police_texte_multi = pygame.font.SysFont("impact", 30)
+            texte_multi = police_texte_multi.render("Multiplicateur actif", True, DORE)
+            ecran_du_jeu.blit(texte_multi, (1000, 340))    
         ecran_du_jeu.blit(texte_temps, (1000, 20))
         ecran_du_jeu.blit(texte_distance, (1000, 60))
         ecran_du_jeu.blit(texte_vitesse, (1000, 100))
