@@ -136,6 +136,8 @@ images_powerups = {
     "slow": image_slow,
     "destruction": image_destruction
 }
+
+
 slow_actif = False
 temps_slow = 0
 DUREE_SLOW = 4000
@@ -192,6 +194,12 @@ while en_cours:
                 voiture = init(voiture_init_x, voiture_init_y, son_menu)
                 voitures_adverses.clear()
                 powerups.clear()
+                bouclier_actif = False
+                slow_actif = False
+                multiplicateur = 1
+                temps_multi = 0
+                temps_bouclier = 0
+                compteur_powerup = 0
                 compteur_spawn = 0
                 vitesse_adversaires = 5
                 vitesse_cible = 2
@@ -268,28 +276,35 @@ while en_cours:
             delai_spawn = random.randint(50, 80)
             compteur_spawn = 0
 
-        # Spawn des boucliers
+        # Spawn des pouvoirs aléatoire
         if compteur_powerup >= delai_powerup:
-            voies_libres = []
-            for i in range(nb_voies):
-                libre = True
-                for v in voitures_adverses:
-                    voie_v = (v.centerx - route.left) // largeur_voie
-                    if voie_v == i and v.y < 200:
-                        libre = False
-                if libre:
-                    voies_libres.append(i)
+            essais = 0
+            spawn_reussi = False
 
-            if voies_libres:
-                voie = random.choice(voies_libres)
+            while essais < 10 and not spawn_reussi:
+                voie = random.randint(0, nb_voies - 1)
+
                 rect = image_bouclier.get_rect()
                 rect.centerx = centres_voies[voie]
                 rect.y = -rect.height
-                type_powerup = random.choice(["bouclier", "slow", "multi", "destruction"])
-                powerups.append({
-                    "rect": rect,
-                    "type": type_powerup
-                })
+
+                zone_test = rect.inflate(20, 20)
+
+                collision = False
+                for v in voitures_adverses:
+                    if zone_test.colliderect(v):
+                        collision = True
+                        break
+
+                if not collision:
+                    type_powerup = random.choice(["bouclier", "slow", "multi", "destruction"])
+                    powerups.append({
+                        "rect": rect,
+                        "type": type_powerup
+                    })
+                    spawn_reussi = True
+
+                essais += 1
 
             compteur_powerup = 0
 
@@ -392,11 +407,17 @@ while en_cours:
         police_texte_vitesse = pygame.font.SysFont("impact", 30)
         police_texte_score = pygame.font.SysFont("impact", 30)
         police_texte_highest_score = pygame.font.SysFont("impact", 30)
+        police_texte_powerup = pygame.font.SysFont("impact", 30)
         texte_temps = police_texte_temps.render(f"Temps : {temps}s", True, BLANC)
         texte_distance = police_texte_distance.render(f"Distance : {int(distance)} m", True, BLANC)
         texte_vitesse = police_texte_vitesse.render(f"Vitesse : {int(vitesse_cible)*10} km/h", True, BLANC)
         texte_score = police_texte_score.render(f"Score : {int(score)}", True, BLANC)
         texte_highest_score = police_texte_highest_score.render(f"Record : {int(meilleur_score)}", True, BLANC)
+        texte_powerup1 = police_texte_powerup.render(f"Pouvoirs :", True, BLANC)
+        texte_bouclier1 = police_texte_powerup.render(f"Bouclier", True, BLANC)
+        texte_slow1 = police_texte_powerup.render(f"Slow", True, BLANC)
+        texte_destruction1 = police_texte_powerup.render(f"Destruction", True, BLANC)
+        texte_multi1 = police_texte_powerup.render(f"Multiplicateur", True, BLANC)
         if bouclier_actif:
             police_texte_bouclier = pygame.font.SysFont("impact", 30)
             texte_bouclier = police_texte_bouclier.render("Bouclier actif", True, DORE)
@@ -414,6 +435,13 @@ while en_cours:
         ecran_du_jeu.blit(texte_vitesse, (1000, 100))
         ecran_du_jeu.blit(texte_score, (1000, 140))
         ecran_du_jeu.blit(texte_highest_score, (1000, 180))
+        ecran_du_jeu.blit(texte_powerup1, (40, 20))
+        ecran_du_jeu.blit(texte_bouclier1, (40, 60))
+        ecran_du_jeu.blit(texte_slow1, (40, 100))
+        ecran_du_jeu.blit(texte_destruction1, (40, 140))
+        ecran_du_jeu.blit(texte_multi1, (40, 180))
+
+
 
         # Déplacement de la voiture
         if touches[pygame.K_LEFT]:
