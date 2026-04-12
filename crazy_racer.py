@@ -123,7 +123,19 @@ bouclier_actif = False
 temps_bouclier = 0
 DUREE_BOUCLIER = 3000
 
-# Autres power-ups effets
+# Autres power-ups
+image_multi_original = pygame.image.load("images/multi_nsi.png").convert_alpha()
+image_multi = pygame.transform.smoothscale(image_multi_original, (largeur_bouclier, hauteur_bouclier))
+image_slow_original = pygame.image.load("images/slow_nsi.png").convert_alpha()
+image_slow = pygame.transform.smoothscale(image_slow_original, (largeur_bouclier, hauteur_bouclier))
+image_destruction_original = pygame.image.load("images/destruction_nsi.png").convert_alpha()
+image_destruction = pygame.transform.smoothscale(image_destruction_original, (largeur_bouclier, hauteur_bouclier))
+images_powerups = {
+    "bouclier": image_bouclier,
+    "multi": image_multi,
+    "slow": image_slow,
+    "destruction": image_destruction
+}
 slow_actif = False
 temps_slow = 0
 DUREE_SLOW = 4000
@@ -131,6 +143,8 @@ DUREE_SLOW = 4000
 multiplicateur = 1
 temps_multi = 0
 DUREE_MULTI = 5000
+
+DUREE_DESTRUCTION = 2000
 
 
 # Compteurs
@@ -357,10 +371,15 @@ while en_cours:
 
                 elif p["type"] == "destruction":
                     voitures_adverses.clear()
+                    if pygame.time.get_ticks() - temps_multi > DUREE_DESTRUCTION:
+                        police_texte_destruction = pygame.font.SysFont("impact", 150)
+                        texte_destruction = police_texte_destruction.render("BOOM !", True, DORE)
+                        ecran_du_jeu.blit(texte_destruction, (450, 100))
 
                 powerups.remove(p)
 
-            ecran_du_jeu.blit(image_bouclier, rect)
+            image_a_afficher = images_powerups.get(p["type"], image_bouclier)
+            ecran_du_jeu.blit(image_a_afficher, rect)
 
             
 
