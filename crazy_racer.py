@@ -63,12 +63,26 @@ FIN = 2
 etat = ACCUEIL                  # État initial du jeu
 
 # Création de la voiture et de la mer
+
+skins = [
+    "images/voiture_nsi.png",
+    "images/voiture_nsi_vert.png",
+    "images/voiture_nsi_violet.png",
+    "images/voiture_nsi_jaune.png",
+    "images/voiture_nsi_turquoise.png"
+]
+
+index_skin = 0
+
 image_mer = pygame.image.load("images/mer_nsi.png")
-image_voiture_originale = pygame.image.load("images/voiture_nsi.png").convert_alpha()
 image_adverse_originale = pygame.image.load("images/voiture_adverse_nsi.png").convert_alpha()
+image_voiture_originale = pygame.image.load(skins[index_skin]).convert_alpha()
 image_voiture = pygame.transform.smoothscale(
-    image_voiture_originale, (int(image_voiture_originale.get_width() * 0.30), int(image_voiture_originale.get_height() * 0.30))
+    image_voiture_originale,
+    (int(image_voiture_originale.get_width() * 0.30),
+     int(image_voiture_originale.get_height() * 0.30))
 )
+
 mask_voiture = pygame.mask.from_surface(image_voiture)
 image_voiture_adverse = pygame.transform.smoothscale(
     image_adverse_originale, (int(image_adverse_originale.get_width() * 0.30), int(image_adverse_originale.get_height() * 0.30))
@@ -165,7 +179,6 @@ meilleur_score = 0
 nouveau_record = False
 temps_record = 0
 
-
 while en_cours:
     for e in pygame.event.get():
         if e.type == pygame.QUIT:
@@ -173,14 +186,30 @@ while en_cours:
 
         if e.type == pygame.MOUSEBUTTONDOWN:
             if etat == ACCUEIL and bouton_jouer.collidepoint(e.pos):
+                image_voiture_originale = pygame.image.load(skins[index_skin]).convert_alpha()
+
+                image_voiture = pygame.transform.smoothscale(
+                    image_voiture_originale,
+                    (int(image_voiture_originale.get_width() * 0.30),
+                    int(image_voiture_originale.get_height() * 0.30))
+                )
+
+                mask_voiture = pygame.mask.from_surface(image_voiture)
+                
                 etat = JEU
                 voiture = init(voiture_init_x, voiture_init_y, son_menu)     # Lancement du jeu
                 temps_debut = pygame.time.get_ticks()
 
         if e.type == pygame.KEYDOWN:
+            if etat == ACCUEIL:
+                if e.key == pygame.K_RIGHT:
+                    index_skin = (index_skin + 1) % len(skins)
+
+                if e.key == pygame.K_LEFT:
+                    index_skin = (index_skin - 1) % len(skins)
+            
             if e.key == pygame.K_z:
                 etat = ACCUEIL          # Retour à l'accueil
-                
                 # Reset du jeu
                 voitures_adverses.clear()
                 powerups.clear()
@@ -460,8 +489,6 @@ while en_cours:
         ecran_du_jeu.blit(image_destruction_1, (250, 145))
         ecran_du_jeu.blit(image_multi_1, (250, 185))
         
-        
-
 
 
         # Déplacement de la voiture
@@ -485,7 +512,7 @@ while en_cours:
     if etat == ACCUEIL:
         if not pygame.mixer.get_busy():
             son_menu.play(-1)
-        accueil(ecran_du_jeu, police_titre, police_texte, police_texte1, BLANC, BLANC1, GRIS1, INDIGO, ROUGE, GRIS, DORE, bouton_jouer, son_menu)
+        accueil(ecran_du_jeu, police_titre, police_texte, police_texte1, BLANC, BLANC1, GRIS1, INDIGO, ROUGE, GRIS, DORE, bouton_jouer, son_menu, skins, index_skin)
 
     elif etat == FIN:
         if son_defaite and not channel_perdu.get_busy():
