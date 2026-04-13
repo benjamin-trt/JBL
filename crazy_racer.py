@@ -111,9 +111,9 @@ acceleration = 0.05
 
 # Création du bouclier
 image_bouclier_original = pygame.image.load("images/bouclier_nsi.png").convert_alpha()
-largeur_bouclier = int(largeur_voie * 0.5)
-hauteur_bouclier = int(largeur_bouclier * 1)
-image_bouclier = pygame.transform.smoothscale(image_bouclier_original, (largeur_bouclier, hauteur_bouclier))
+largeur_powerup = int(largeur_voie * 0.5)
+hauteur_powerup = int(largeur_powerup * 1)
+image_bouclier = pygame.transform.smoothscale(image_bouclier_original, (largeur_powerup, hauteur_powerup))
  
 powerups = []
 compteur_powerup = 0
@@ -125,11 +125,19 @@ DUREE_BOUCLIER = 3000
 
 # Autres power-ups
 image_multi_original = pygame.image.load("images/multi_nsi.png").convert_alpha()
-image_multi = pygame.transform.smoothscale(image_multi_original, (largeur_bouclier, hauteur_bouclier))
+image_multi = pygame.transform.smoothscale(image_multi_original, (largeur_powerup, hauteur_powerup))
 image_slow_original = pygame.image.load("images/slow_nsi.png").convert_alpha()
-image_slow = pygame.transform.smoothscale(image_slow_original, (largeur_bouclier, hauteur_bouclier))
+image_slow = pygame.transform.smoothscale(image_slow_original, (largeur_powerup, hauteur_powerup))
 image_destruction_original = pygame.image.load("images/destruction_nsi.png").convert_alpha()
-image_destruction = pygame.transform.smoothscale(image_destruction_original, (largeur_bouclier, hauteur_bouclier))
+image_destruction = pygame.transform.smoothscale(image_destruction_original, (largeur_powerup, hauteur_powerup))
+image_multi_original_1 = pygame.image.load("images/multi_nsi.png").convert_alpha()
+image_multi_1 = pygame.transform.smoothscale(image_multi_original_1, (30, 30))
+image_slow_original_1 = pygame.image.load("images/slow_nsi.png").convert_alpha()
+image_slow_1 = pygame.transform.smoothscale(image_slow_original_1, (30, 30))
+image_destruction_original_1 = pygame.image.load("images/destruction_nsi.png").convert_alpha()
+image_destruction_1 = pygame.transform.smoothscale(image_destruction_original_1, (30, 30))
+image_bouclier_original_1 = pygame.image.load("images/bouclier_nsi.png").convert_alpha()
+image_bouclier_1 = pygame.transform.smoothscale(image_bouclier_original_1, (30, 30))
 images_powerups = {
     "bouclier": image_bouclier,
     "multi": image_multi,
@@ -172,6 +180,7 @@ while en_cours:
         if e.type == pygame.KEYDOWN:
             if e.key == pygame.K_z:
                 etat = ACCUEIL          # Retour à l'accueil
+                
                 # Reset du jeu
                 voitures_adverses.clear()
                 powerups.clear()
@@ -288,15 +297,15 @@ while en_cours:
                 rect.centerx = centres_voies[voie]
                 rect.y = -rect.height
 
-                zone_test = rect.inflate(20, 20)
+                voie_libre = True
 
-                collision = False
                 for v in voitures_adverses:
-                    if zone_test.colliderect(v):
-                        collision = True
-                        break
+                    if abs(v.centerx - centres_voies[voie]) < largeur_voie // 2:
+                        if v.y < 200:
+                            voie_libre = False
+                            break
 
-                if not collision:
+                if voie_libre:
                     type_powerup = random.choice(["bouclier", "slow", "multi", "destruction"])
                     powerups.append({
                         "rect": rect,
@@ -361,6 +370,11 @@ while en_cours:
 
         for p in powerups[:]:
             rect = p["rect"]
+
+            for v in voitures_adverses:
+                if p["rect"].colliderect(v):
+                    powerups.remove(p)
+                    break
 
             vitesse_effective = vitesse_adversaires
             if slow_actif:
@@ -440,6 +454,13 @@ while en_cours:
         ecran_du_jeu.blit(texte_slow1, (40, 100))
         ecran_du_jeu.blit(texte_destruction1, (40, 140))
         ecran_du_jeu.blit(texte_multi1, (40, 180))
+
+        ecran_du_jeu.blit(image_bouclier_1, (250, 65))
+        ecran_du_jeu.blit(image_slow_1, (250, 105))
+        ecran_du_jeu.blit(image_destruction_1, (250, 145))
+        ecran_du_jeu.blit(image_multi_1, (250, 185))
+        
+        
 
 
 
