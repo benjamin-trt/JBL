@@ -1,5 +1,5 @@
 import pygame
-def accueil(ecran_du_jeu, police_titre, police_texte, police_texte1, BLANC, BLANC1, GRIS1, INDIGO, ROUGE, GRIS, DORE, bouton_jouer, son_menu, skins, index_skin):
+def accueil(ecran_du_jeu, police_titre, police_texte, police_texte1, BLANC, BLANC1, GRIS1, INDIGO, ROUGE, GRIS, DORE, bouton_jouer, son_menu, skins, index_skin, fleche_gauche, fleche_droite):
     """Cette fonction renvoie l'écran d'accueil du jeu, et permet au joueur de lancer sa partie."""
     image_accueil = pygame.image.load("images/villevoiture.png")
     image_accueil = pygame.transform.scale(image_accueil, ecran_du_jeu.get_size())
@@ -9,6 +9,7 @@ def accueil(ecran_du_jeu, police_titre, police_texte, police_texte1, BLANC, BLAN
     titre2 = police_titre.render("RACER", True, ROUGE)
     police_texte = pygame.font.SysFont("impact", 20, italic=True)
     police_texte1 = pygame.font.SysFont("showcardgothic", 35, bold=False)
+    police_texte3 = pygame.font.SysFont("impact", 25, italic=False)
     sous_titre = police_texte.render("Test   your   skills   at   high   speed", True, DORE)
     sous_titre = pygame.transform.rotate(sous_titre, -0.5)
     ecran_du_jeu.blit(titre1, (950, 30))
@@ -20,6 +21,12 @@ def accueil(ecran_du_jeu, police_titre, police_texte, police_texte1, BLANC, BLAN
     image_preview = pygame.image.load(skins[index_skin]).convert_alpha()
     image_preview = pygame.transform.scale(image_preview, (120, 240))
     ecran_du_jeu.blit(image_preview, (150, 475))
+    bouton_skin = pygame.Rect(157, 420, 115, 40)
+    pygame.draw.rect(ecran_du_jeu, BLANC1, bouton_skin, border_radius=10)
+    skin_titre = police_texte3.render("Skins :", True, GRIS)
+    ecran_du_jeu.blit(skin_titre, (183, 425))
+    ecran_du_jeu.blit(fleche_gauche, (100, 570))
+    ecran_du_jeu.blit(fleche_droite, (290, 570))
     
     if not son_menu.get_num_channels():
         son_menu.play(-1)
