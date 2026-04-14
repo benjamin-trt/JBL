@@ -62,7 +62,7 @@ JEU = 1
 FIN = 2
 etat = ACCUEIL                  # État initial du jeu
 
-# Création de la voiture et de la mer
+# Création de la voiture et de la mer (et autres images si besoin)
 
 skins = [
     "images/voiture_nsi.png",
@@ -88,6 +88,11 @@ image_voiture_adverse = pygame.transform.smoothscale(
     image_adverse_originale, (int(image_adverse_originale.get_width() * 0.30), int(image_adverse_originale.get_height() * 0.30))
 )
 mask_adverse = pygame.mask.from_surface(image_voiture_adverse)
+
+fleche_gauche = pygame.image.load("images/fleche_gauche_nsi.png").convert_alpha()
+fleche_gauche = pygame.transform.scale(fleche_gauche, (30, 60))
+fleche_droite = pygame.image.load("images/fleche_droite_nsi.png").convert_alpha()
+fleche_droite = pygame.transform.scale(fleche_droite, (30, 60))
 
 voiture_init_x = 685
 voiture_init_y = 500
@@ -512,7 +517,7 @@ while en_cours:
     if etat == ACCUEIL:
         if not pygame.mixer.get_busy():
             son_menu.play(-1)
-        accueil(ecran_du_jeu, police_titre, police_texte, police_texte1, BLANC, BLANC1, GRIS1, INDIGO, ROUGE, GRIS, DORE, bouton_jouer, son_menu, skins, index_skin)
+        accueil(ecran_du_jeu, police_titre, police_texte, police_texte1, BLANC, BLANC1, GRIS1, INDIGO, ROUGE, GRIS, DORE, bouton_jouer, son_menu, skins, index_skin, fleche_gauche, fleche_droite)
 
     elif etat == FIN:
         if son_defaite and not channel_perdu.get_busy():
